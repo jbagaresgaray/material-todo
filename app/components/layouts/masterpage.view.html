@@ -1,0 +1,19 @@
+<!-- content pages with header footer -->
+<!-- loading the header -->
+<div id="header" ng-include="headerBlock"></div>
+<!-- loading content -->
+<div class="content-container">
+    <div class="container-fluid">
+        <div ng-if="showLeftColumn">
+            <div ui-view></div>
+        </div>
+
+        <div ng-if="!showLeftColumn">
+            <div class="col-md-12 right-column-contents">
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- loading the footer -->
+<div id="footer" ng-include="footerBlock"></div>

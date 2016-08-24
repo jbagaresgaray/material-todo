@@ -1,0 +1,63 @@
+<div id="editprofile" ng-init="vm.getuserprofile()">
+    <section class="row">
+        <div class="col-sm-2">
+            <ul class="nav nav-stacked">
+                <li><a href="" ui-sref="editprofile"><i class="material-icons va">person</i> Edit Profile</a></li>
+                <li><a href=""><i class="material-icons va">mail_outline</i> Email Addresses</a></li>
+                <li><a href=""><i class="material-icons va">notifications_none</i> Notifications</a></li>
+                <li><a href=""><i class="material-icons va">security</i> Security</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-8 edit-info-container">
+            <form name="form" ng-submit="vm.updateprofile()" role="form">
+                <small>Account Settings > Edit Profile</small>
+                <h1>Edit Profile</h1>
+                <p>Lorem ipsum sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ullamco laboris nisi ut aliquip ex ea commondo consequat. Duis aute irure dolor
+                    in reprehendrit in voluptate veit esse cillum.</p>
+                <section class="row">
+                    <div class="col-md-6">
+                        <section class="edit-user-info-1">
+                            <md-input-container class="md-block">
+                                <label>First Name</label>
+                                <input ng-model="vm.user.first_name">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Last Name</label>
+                                <input ng-model="vm.user.last_name">
+                            </md-input-container>
+                        </section>
+                        <section class="edit-user-info-2">
+                            <md-input-container class="md-block profile-country">
+                                <md-select placeholder="Country" ng-model="globals.currentUser.country">
+                                    <md-option ng-model="vm.user.country" ng-repeat="country in countries">{{country}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <div class="space"></div>
+                            <md-input-container class="md-block profile-timezone">
+                                <md-select placeholder="Timezone" ng-model="user">
+                                    <md-option ng-model="vm.user.timezone" ng-repeat="tz in timezone">{{tz}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </section>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-photo-container" ngf-select="vm.uploadProfilePic($file)" ng-model="vm.user.s3_file_uri_user_photo" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+                            <div class="profile-circle" ng-if="vm.user.s3_file_uri_user_photo">
+                                <img ng-hide="vm.isFileChange" back-image="vm.user.s3_file_uri_user_photo || 'http://placehold.it/140x140'" back-image-width="100" back-image-height="100">
+                                <img ng-show="vm.isFileChange" class="profile-circle" ngf-thumbnail="vm.user.s3_file_uri_user_photo || 'http://placehold.it/140x140'" style="width: 100px; height: 100px;">
+                            </div>
+                            <div class="add-photo" ng-if="!vm.user.s3_file_uri_user_photo">
+                                <i class="material-icons">add_a_photo</i>
+                            </div>
+                            <p class="text-center">Upload your profile photo</p>
+                        </div>
+                    </div>
+
+                </section>
+                <md-button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="md-raised md-primary profile-save" style="background: #1d9622">save</md-button>
+            </form>
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </section>
+</div>

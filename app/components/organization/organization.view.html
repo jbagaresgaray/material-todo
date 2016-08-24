@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="container">
+        <div class="col-md-9">
+            <p><h4>Add Organization</h4></p>
+            <form name="form" ng-submit="vm.create()" role="form" class="form-inline">
+                <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+                    <label class="sr-only" for="name">Organization Name</label>
+                    <input type="text" name="name" id="name" class="form-control input-width-custom" ng-model="vm.organization.name" placeholder="Organization Name" required />
+                    <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Organization Name is required</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="sr-only" for="description">Description</label>
+                    <input type="text" name="description" id="description" class="form-control input-width-custom" ng-model="vm.organization.description" placeholder="Description" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row row-margin-top-custom">
+    <div class="container">
+        <div class="col-md-9">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <th>Name&nbsp;</th>
+                    <th>Description&nbsp;</th>
+                    <th>Action&nbsp;</th>
+                </thead>
+                    
+                <tbody>
+                    <tr ng-repeat="organization in organizations.organizations" ng-include="vm.getTemplate(organization)">
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="display">
+    <td>{{organization.name}}</td>
+    <td>{{organization.description}}</td>
+    <td>
+        <a data-ng-click="vm.editOrganization(organization)" class="btn">&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp; Edit</a>
+        <a data-ng-click="vm.deleteOrganization(organization.id)" class="btn">&nbsp;<i class="glyphicon glyphicon-remove"></i>&nbsp; Delete</a>
+    </td>
+</script>
+<script type="text/ng-template" id="edit">
+    <td><input type="text" ng-model="organizations.selected.name" /></td>
+    <td><input type="text" ng-model="organizations.selected.description" /></td>
+    <td>
+        <button ng-click="vm.saveOrganization($index)">Save</button>
+        <button ng-click="vm.reset()">Cancel</button>
+    </td>
+</script>

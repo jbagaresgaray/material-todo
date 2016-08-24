@@ -1,0 +1,71 @@
+#yp-left-column {
+  .yp-taskgroup {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    margin-top: 2.5rem;
+    li {
+      padding-top: 1.250rem;
+      padding-bottom: 1.250rem;
+      a {
+        color: #555;
+        font-size: 1.4rem;
+        font-weight: 700;
+        display: block;
+        &:hover {
+          text-decoration: none;
+        }
+        i {
+          color: #878787;
+          font-size: 2.4rem;
+          margin-right: 1.4rem;
+          margin-left: 1rem;
+        }
+        span {
+          background: #ccc;
+          color: #555;
+        }
+      }
+    }
+  }
+  .yp-folder-container {
+    p {
+      margin-left: 1rem;
+      margin-top: 8rem;
+      position: relative;
+      font-weight: 500;
+      font-size: 1.4rem;
+      color: #555;
+      padding-bottom: 1.200rem;
+      border-bottom: 1px solid #ccc;
+      i {
+        position: absolute;
+        right: 0;
+        font-size: 2.800rem;
+        color: #878787;
+      }
+    }
+    .yp-folders {
+      padding: 0;
+      margin: 0;
+      padding-left: 1rem;
+      list-style: none;
+      li {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        a {
+          &:hover {
+            text-decoration: none;
+          }
+          font-weight: 500;
+          font-size: 1.4rem;
+          color: #555;
+          i {
+            font-size: 1.8rem;
+            color: #878787;
+          }
+        }
+      }
+    }
+  }
+}

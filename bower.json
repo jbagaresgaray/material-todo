@@ -1,0 +1,45 @@
+{
+  "name": "youproductive",
+  "description": "youproductive",
+  "main": "index.js",
+  "authors": [
+    "Calvin <calvingferrando18@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "angular-bootstrap": "^1.2.1",
+    "angular-loading-bar": "^0.8.0",
+    "bootstrap": "^3.3.6",
+    "html5shiv": "^3.7.3",
+    "respond": "^1.4.2",
+    "moment": "^2.11.2",
+    "angular-ui-router": "^0.2.18",
+    "angular-material": "^1.0.5",
+    "ngstorage": "^0.3.10",
+    "angular-cookies": "^1.5.0",
+    "lodash": "^4.5.1",
+    "ng-tags-input": "^3.0.0",
+    "restangular": "^1.5.2",
+    "sc-date-time": "^1.1.6",
+    "angular-jwt": "~0.0.9",
+    "ng-file-upload": "^12.0.1",
+    "font-awesome": "fontawesome#^4.5.0",
+    "angular-socket-io": "^0.7.0",
+    "angular-resource": "^1.5.1",
+    "ng-notify": "^0.7.2",
+    "angular-toastr": "^1.7.0",
+    "angular-contenteditable": "^0.3.8",
+    "mdPickers": "^0.7.2",
+    "moment-timezone": "^0.5.3",
+    "angular-moment": "^0.10.3"
+  },
+  "resolutions": {
+    "angular": "^1.5.0",
+    "moment": "^2.11.2"
+  }
+}

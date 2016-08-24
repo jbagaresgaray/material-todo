@@ -1,0 +1,33 @@
+<div class="cl-left-nav">
+	<ul class="nav nav-pills nav-stacked">
+		<li><a href="" ng-click="vm.changeState($event, 'inbox');" class="youlink text-muted" ng-class="{'active': vm.activeState == 'inbox'}"><i class="material-icons va" ng-class="{'active': vm.activeState == 'inbox'}">inbox</i> Inbox <span class="badge pull-right" ng-show="vm.taskgroup.inbox.length > 0">{{vm.taskgroup.inbox.length}}</span></a></li>
+		<li hover-link><a href="" ng-click="vm.changeState($event, 'starred');" class="youlink text-muted" ng-class="{'active': vm.activeState == 'starred'}"><i class="material-icons va" ng-class="{'active': vm.activeState == 'starred'}">star_border</i> Starred <span class="badge pull-right" ng-show="vm.taskgroup.starred.length > 0">{{vm.taskgroup.starred.length}}</span></a></li>
+		<li hover-link><a href="" ng-click="vm.changeState($event, 'priorities');" class="youlink text-muted" ng-class="{'active': vm.activeState == 'priorities'}"><i class="material-icons va" ng-class="{'active': vm.activeState == 'priorities'}">error_outline</i> Priorities <span class="badge pull-right" ng-show="vm.taskgroup.priorities.length > 0">{{vm.taskgroup.priorities.length}}</span></a></li>
+		<li hover-link><a href="" ng-click="vm.changeState($event, 'duedate');" class="youlink text-muted" ng-class="{'active': vm.activeState == 'duedate'}"><i class="material-icons va" ng-class="{'active': vm.activeState == 'duedate'}">event_note</i> Due Date</a></li>
+		<li hover-link><a href="" ng-click="vm.changeState($event, 'recentlyadded');" class="youlink text-muted" ng-class="{'active': vm.activeState == 'recentlyadded'}"><i class="material-icons va" ng-class="{'active': vm.activeState == 'recentlyadded'}">today</i> Recently Added</a></li>
+		<li hover-link><a href="" ng-click="vm.changeState($event, 'completed');" class="youlink text-muted" ng-class="{'active': vm.activeState == 'completed'}"><i class="material-icons va" ng-class="{'active': vm.activeState == 'completed'}">done</i> Completed</a></li>
+	</ul>
+	<section id="folders">
+		<div class="fo-top">
+			<section class="fo-to-title">FOLDERS</section>
+			<section class="fo-to-dropdown"><a href="" ng-click="folderCollapse = !folderCollapse"><i class="material-icons">{{folderCollapse ? 'expand_more' : 'expand_less'}}</i></a></section>
+			<div class="clearfix"></div>
+		</div>
+		<div class="fo-mid" uib-collapse="folderCollapse">
+			<section class="fo-bo-folders">
+				<p class="fo-bo-folder" ng-if="!vm.folders.length"> No folders.</p>
+				<p class="fo-bo-folder" ng-repeat="folder in vm.folders"><i class="material-icons va text-muted">folder</i> {{folder.name}}</p>
+			</section>
+		</div>
+		<!--<div class="fo-bot">-->
+			<!--<section class="fo-to-dropdown"><a href="" ng-click="addFolder = !addFolder"><i class="material-icons">add_circle</i></a></section>-->
+			<!--<section ng-show="addFolder">-->
+				<!--<md-input-container style="margin:0">-->
+					<!--<input ng-model="vm.folder.name" placeholder="Type in folder name">-->
+				<!--</md-input-container>-->
+				<!--<p><button class="btn btn-sm btn-success" ng-click="vm.saveFolder()">Add</button> <button class="btn btn-sm btn-default" ng-click="addFolder = !addFolder">Cancel</button></p>-->
+			<!--</section>-->
+			<!--<div class="clearfix"></div>-->
+		<!--</div>-->
+	</section>
+</div>

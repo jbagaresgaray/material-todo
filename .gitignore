@@ -1,0 +1,8 @@
+.DS_Store
+package.json
+assets/bower_components/
+node_modules/
+.idea/
+main.js
+dist/
+app/app.constant.js

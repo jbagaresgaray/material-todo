@@ -1,0 +1,683 @@
+<section id="yp-tasks-container">
+    <div class="row">
+        <div class="left-column col-md-2" ng-if="!!tasksMenuOpen">
+            <div id="yp-left-column">
+                <ul class="yp-taskgroup">
+                    <li hover-link><a href="" ng-click="vm.changeState($event, 'inbox');" class="youlink" ng-class="{'active': vm.activeState == 'inbox'}"><i class="material-icons" ng-class="{'active': vm.activeState == 'inbox'}">inbox</i> Inbox <span class="badge pull-right" ng-show="vm.taskgroup.inbox.length > 0">{{vm.taskgroup.inbox.length}}</span></a></li>
+                    <li hover-link><a href="" ng-click="vm.changeState($event, 'starred');" class="youlink" ng-class="{'active': vm.activeState == 'starred'}"><i class="material-icons" ng-class="{'active': vm.activeState == 'starred'}">star_border</i> Starred <span class="badge pull-right" ng-show="vm.taskgroup.starred.length > 0">{{vm.taskgroup.starred.length}}</span></a></li>
+                    <li hover-link><a href="" ng-click="vm.changeState($event, 'priorities');" class="youlink" ng-class="{'active': vm.activeState == 'priorities'}"><i class="material-icons" ng-class="{'active': vm.activeState == 'priorities'}">error_outline</i> Priorities <span class="badge pull-right" ng-show="vm.taskgroup.priorities.length > 0">{{vm.taskgroup.priorities.length}}</span></a></li>
+                    <li hover-link><a href="" ng-click="vm.changeState($event, 'duedate');" class="youlink" ng-class="{'active': vm.activeState == 'duedate'}"><i class="material-icons" ng-class="{'active': vm.activeState == 'duedate'}">event_note</i> Due Date <span class="badge pull-right" ng-show="vm.taskgroup.duedate.length > 0">{{vm.taskgroup.duedate.length}}</span></a></li>
+                    <li hover-link><a href="" ng-click="vm.changeState($event, 'recentlyadded');" class="youlink" ng-class="{'active': vm.activeState == 'recentlyadded'}"><i class="material-icons" ng-class="{'active': vm.activeState == 'recentlyadded'}">today</i> Recently Added</a></li>
+                    <li hover-link><a href="" ng-click="vm.changeState($event, 'completed');" class="youlink" ng-class="{'active': vm.activeState == 'completed'}"><i class="material-icons" ng-class="{'active': vm.activeState == 'completed'}">done</i> Completed</a></li>
+                </ul>
+                <div class="yp-folder-container">
+                    <p>FOLDERS <i class="material-icons" ng-init="folderCollapse = true" ng-click="folderCollapse = !folderCollapse">{{folderCollapse ? 'expand_more' : 'expand_less'}}</i></p>
+                    <ul class="yp-folders" uib-collapse="folderCollapse">
+                        <li ng-if="!vm.folders.length"><a href=""> No folders.</a></li>
+                        <li ng-repeat="folder in vm.folders"><a href=""><i class="material-icons">folder</i> {{folder.name}}</a></li>
+                    </ul>
+                </div>
+                <div class="yp-folder-container">
+                    <p>TAGS <i class="material-icons" ng-init="tagCollapse = true" ng-click="tagCollapse = !tagCollapse">{{tagCollapse ? 'expand_more' : 'expand_less'}}</i></p>
+                    <ul class="yp-folders" uib-collapse="tagCollapse">
+                        <li><a href=""> No tags.</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right-column col-md-8 task-body">
+            <!-- task input -->
+            <form name="form" ng-submit="vm.createTask()" role="form">
+                <div id="yp-task-input-container">
+                    <div class="header">
+                        <div class="profile-image">
+                            <div class="profile-circle">
+                                <img back-image="globals.currentUser.s3_file_uri_user_photo" back-image-width="38" back-image-height="38">
+                            </div>
+                        </div>
+                        <input type="text" placeholder="What are you going to do next?" ng-model="vm.create_task.name" ng-if="!vm.taskEntryMode" required>
+                        <textarea placeholder="What are you going to do next?" ng-model="vm.create_task.name" ng-if="!!vm.taskEntryMode" required></textarea>
+                        <div class="actions" uib-dropdown>
+                            <button type="submit" class="btn btn-default btn-circle"><i class="material-icons">add</i></button>
+                            <button type="button" class="btn btn-default btn-circle" ng-click="is_task_input_collapsed = !is_task_input_collapsed" ng-class="{'create-task-orange' : vm.hasCreateTaskProperty()}"><i class="material-icons" id="more">more_horiz</i></button>
+                        </div>
+                    </div>
+                    <div class="yp-task-details-container" uib-collapse="!is_task_input_collapsed">
+                        <div class="sub-actions">
+                            <p><a href="" ng-click="vm.create_task.starred = !vm.create_task.starred"><i class="material-icons" ng-class="{'starred' : vm.create_task.starred}">{{vm.create_task.starred ? 'star' : 'star_border'}}</i> {{vm.create_task.starred ? 'Unstar this task' : 'Star this task'}}</a></p>
+                            <span uib-dropdown>
+                                <p id="task-sub-action" uib-dropdown-toggle>
+                                    <a href=""><i class="material-icons" ng-class="{'high': vm.create_task.priority == 'High', 'normal': vm.create_task.priority == 'Normal', 'low': vm.create_task.priority == 'Low'}">{{vm.create_task.priority ? 'error' : 'error_outline'}}</i> Set a priority</a>
+                                </p>
+                                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="task-sub-action">
+                                    <li role="menuitem" ng-repeat="option in vm.priorityOptions">
+                                        <a href="" ng-click="vm.create_task.priority = option.name">
+                                        {{option.name}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </span>
+                            <p><a href="" ng-click="vm.openStatuses()"><i class="material-icons">timeline</i> Set a status</a></p>
+                        </div>
+                        <div class="contents">
+                            <div class="row">
+                                <div class="col-md-6 left-column">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <div class="start-date">
+                                                <i class="material-icons date-time">access_time</i>
+                                                <p>Start Date</p>
+                                                <input id="e-start-date" placeholder="Select date" class="date-input" type="text" ng-click="vm.showDatePicker($event, vm.create_task, 'start_date')" ng-value="vm.changeToDate(vm.create_task.start_date)">
+                                                <i class="material-icons down" ng-click="vm.showDatePicker($event, vm.create_task, 'start_date')">arrow_drop_down</i>
+                                                <!--<input id="e-start-date" placeholder="Select date" class="date-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/e-start-date.view.html'" ng-value="vm.changeToDate(vm.create_task.start_date)">-->
+                                                <!--<i class="material-icons down" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/e-start-date.view.html'">arrow_drop_down</i>-->
+                                            </div>
+                                            <div class="due-date">
+                                                <i class="material-icons date-time">access_time</i>
+                                                <p>Due Date</p>
+                                                <input id="e-end-date" placeholder="Select date" class="date-input" type="text" ng-click="vm.showDatePicker($event, vm.create_task, 'end_date')" ng-value="vm.changeToDate(vm.create_task.end_date)">
+                                                <i class="material-icons down" ng-click="vm.showDatePicker($event, vm.create_task, 'end_date')">arrow_drop_down</i>
+                                                <!--<input id="e-end-date" placeholder="Select date" class="date-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/e-end-date.view.html'" ng-value="vm.changeToDate(vm.create_task.end_date)">-->
+                                                <!--<i class="material-icons down" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/e-end-date.view.html'">arrow_drop_down</i>-->
+                                            </div>
+                                            <div class="repeat">
+                                                <i class="material-icons date-time">repeat</i>
+                                                <p>Repeat</p>
+                                                <md-select ng-model="vm.create_task.repeat" aria-label="repeat">
+                                                    <md-option ng-repeat="repeat in vm.repeats.repeat">
+                                                        {{repeat}}
+                                                    </md-option>
+                                                </md-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="yp-time">
+                                                <p></p>
+                                                <input placeholder="Select time" class="time-input" type="text" ng-click="vm.showTimePicker($event, vm.create_task, 'start_date_time')" ng-value="vm.changeToTime(vm.create_task.start_date_time)">
+                                                <i class="material-icons" ng-click="vm.showTimePicker($event, vm.create_task, 'start_date_time')">arrow_drop_down</i>
+                                                <!--<input placeholder="Select time" class="time-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/start-date-time.view.html'">-->
+                                                <!--<i class="material-icons" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/start-date-time.view.html'">arrow_drop_down</i>-->
+                                            </div>
+                                            <div class="yp-time">
+                                                <p></p>
+                                                <input placeholder="Select time" class="time-input" type="text" ng-click="vm.showTimePicker($event, vm.create_task, 'end_date_time')" ng-value="vm.changeToTime(vm.create_task.end_date_time)">
+                                                <i class="material-icons" ng-click="vm.showTimePicker($event, vm.create_task, 'end_date_time')">arrow_drop_down</i>
+                                                <!--<input placeholder="Select time" class="time-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/end-date-time.view.html'">-->
+                                                <!--<i class="material-icons" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/end-date-time.view.html'">arrow_drop_down</i>-->
+                                            </div>
+                                            <div class="repeat-from">
+                                                <p>Repeat From</p>
+                                                <md-select ng-model="vm.create_task.repeat_from" aria-label="repeat_from">
+                                                    <md-option ng-repeat="repeat in vm.repeats.from">
+                                                        {{repeat}}
+                                                    </md-option>
+                                                </md-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 right-column">
+                                    <div class="folder">
+                                        <i class="material-icons">folder_open</i>
+                                        <p>Folder</p>
+                                        <form ng-submit="vm.saveFolder(task)">
+                                            <md-autocomplete id="folder-input" md-search-text="vm.folder.name" md-items="folder in task.folders | filter:vm.folder.name" md-item-text="folder.name" md-min-length="0" placeholder="Which folder to insert?" ng-blur="task.folder">
+                                                <md-item-template>
+                                                    <span md-highlight-text="vm.folder.name" md-highlight-flags="^i">{{folder.name}}</span>
+                                                </md-item-template>
+                                                <md-not-found>
+                                                    <a ng-click="vm.saveFolder(vm.folder.name)">Create a new one!</a>
+                                                </md-not-found>
+                                            </md-autocomplete>
+                                        </form>
+                                    </div>
+                                    <!--<div class="project">-->
+                                    <!--<i class="material-icons">view_column</i>-->
+                                    <!--<p>Project</p>-->
+                                    <!--<md-input-container>-->
+                                    <!--<label>Project</label>-->
+                                    <!--<input ng-model="user.title">-->
+                                    <!--</md-input-container>-->
+                                    <!--</div>-->
+                                    <div class="tags">
+                                        <i class="material-icons">label_outline</i>
+                                        <p>Tags</p>
+                                        <tags-input on-tag-added="vm.addTag($tag, task)" on-tag-removed="vm.deleteTag($tag)" placeholder="Add a tag" display-property="name" ng-model="task.child.tags">
+                                            <auto-complete source="vm.loadTags($query)" max-results-to-show="10" load-on-focus="true" debounce-delay="0">
+                                            </auto-complete>
+                                        </tags-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="reset" ng-click="vm.create_task = {}">RESET</p>
+                        <p class="multiple" style="margin-bottom:0;cursor:pointer;" ng-click="vm.taskEntryMode = !vm.taskEntryMode">ADD MULTIPLE TASKS</p>
+                        <!--<p class="multiple" uib-dropdown-toggle id="single-button">ADD MULTIPLE TASKS</p>-->
+                        <!--<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">-->
+                        <!--<li role="menuitem"><a href="" class="rm-float-right" ng-click="vm.taskEntryMode = 'single';">Single Task</a></li>-->
+                        <!--<li role="menuitem"><a href="" class="rm-float-right" ng-click="vm.taskEntryMode = 'bulk';">Bulk Task</a></li>-->
+                        <!--</ul>-->
+                    </div>
+                </div>
+            </form>
+            <div id="yp-tasks-filters" class="clearfix">
+                <div class="actions">
+                    <!--<i class="material-icons">view_module</i>-->
+                    <i class="material-icons">sort_by_alpha</i>
+                    <i class="material-icons">filter_list</i>
+                </div>
+                <md-progress-circular md-diameter="35" ng-hide="!vm.isRequesting" md-mode="indeterminate" style="margin: 0 auto"></md-progress-circular>
+            </div>
+            <!-- task inner -->
+            <div id="yp-tasks-inner" ng-repeat="(group, tasks) in vm.taskgroup track by $index" ng-show="group === vm.activeState">
+                <div class="yp-task" ng-repeat="task in tasks | orderBy:'-created_at':true | limitTo: vm.limitTo" ng-class="{'space' : !!task.is_collapsed}">
+                    <div class="yp-task-header">
+                        <section class="actions" uib-dropdown>
+                            <i class="material-icons" ng-click="task.is_collapsed = !task.is_collapsed">{{!!task.is_collapsed ? 'expand_less' : 'expand_more'}}</i>
+                            <i class="material-icons" ng-click="vm.updateTask(task, 'is_complete')">{{!!task.is_complete ? 'check_box' : 'check_box_outline_blank'}}</i>
+                            <i class="material-icons" uib-dropdown-toggle id="more-actions" style="cursor: pointer">more_vert</i>
+                            <ul uib-dropdown-menu role="menu" aria-labelledby="more-actions">
+                                <li role="menuitem">
+                                    <a href="" ng-click="vm.updateTask(task, 'starred');"><i class="material-icons" star-color starred="task.starred">star</i> {{task.starred ? 'Unstar this task' : 'Star this task'}}</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li role="menuitem">
+                                    <a href="" class="no-highlight">Set a priority</a>
+                                    <a ng-click="vm.updateTask(task, 'priorities', 'High')" href=""><i class="material-icons" style="color: #a51c1c;">error</i> High</a>
+                                    <a ng-click="vm.updateTask(task, 'priorities', 'Normal')" href=""><i class="material-icons" style="color: #1d9622;">error</i> Normal</a>
+                                    <a ng-click="vm.updateTask(task, 'priorities', 'Low')" href=""><i class="material-icons" style="color: #f39c12;">error</i> Low</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li role="menuitem">
+                                    <a href="" ng-click="vm.updateTask(task, 'status')"><i class="material-icons">timeline</i> Set a status</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li role="menuitem"><a href="" ng-click="vm.deleteTask(task, sub)"><i class="material-icons">delete</i> Delete task</a></li>
+                            </ul>
+                        </section>
+                        <section class="details">
+                            <a href="#/task/{{task.id}}">{{task.name}}</a>
+                            <!--{{task.name}}-->
+                            <span class="details-icon" ng-show="task.child.notes.length > 0" ng-click="vm.taskLoadChildSection(task, 'notes')"><i class="material-icons">description</i></span>
+                            <span class="tags-icon" ng-show="task.child.comments.length > 0"><i class="material-icons" ng-click="vm.taskLoadChildSection(task, 'comments')">comment</i> {{task.child.comments.length}}</span>
+                            <span class="tags-icon" ng-show="task.child.files.length > 0"><i class="material-icons" ng-click="vm.taskLoadChildSection(task, 'files')">photo</i> {{task.child.files.length}}</span>
+                            <span class="tags-icon" ng-show="task.child.tags.length > 0" ng-repeat="tag in task.child.tags"><i class="material-icons" ng-click="vm.taskLoadChildSection(task, 'taskdetails')">label</i> {{tag.name}}</span>
+                            <div style="display:inline-block" ng-repeat="assigned in task.child.assigned_users">
+                                <div class="profile-circle" ng-click="vm.taskLoadChildSection(task, 'assigned_users')">
+                                    <img back-image="assigned.s3_file_uri" back-image-width="24" back-image-height="24" src="">
+                                </div>
+                                <span class="tiny-profile-name">{{assigned.first_name}} {{assigned.last_name.substr(0, 1)}}.</span>
+                            </div>
+                        </section>
+                        <section class="status" uib-dropdown>
+                            <i class="material-icons starred" ng-if="task.starred" ng-click="vm.updateTask(task, 'starred');">star</i>
+                            <i class="material-icons" ng-show="task.priority" ng-class="{'high': task.priority == 'High', 'normal': task.priority == 'Normal', 'low': task.priority == 'Low'}" id="top-menu-priority" uib-dropdown-toggle>error</i>
+                            <ul uib-dropdown-menu role="menu" aria-labelledby="top-menu-priority">
+                                <li role="menuitem" ng-repeat="option in vm.priorityOptions">
+                                    <a href="" ng-click="vm.updateTask(task, 'priorities', option.name)">
+                                        <i class="material-icons {{option.theme}} va">error</i> {{option.name}}
+                                    </a>
+                                </li>
+                            </ul>
+                            <span class="due-date" style="cursor: pointer"><span ng-click="vm.showDatePicker($event, task, 'end_date')">{{task.end_date ? (task.end_date | youDate) : 'No date'}}</span></span>
+                        </section>
+                    </div>
+                    <div uib-collapse="!task.is_collapsed">
+                        <section class="yp-task-expanded">
+                            <div class="expanded-menu">
+                                <ul class="yp-inner-menus">
+                                    <li hover-link>
+                                        <a href="" class="youlink" ng-class="{'active': task.activeState === 'taskdetails'}" ng-click="task.activeState = 'taskdetails'">
+                                            <i class="material-icons" ng-class="{'active': task.activeState === 'taskdetails'}">assignment</i> Task details</a>
+                                    </li>
+                                    <li hover-link>
+                                        <a href="" class="youlink" ng-class="{'active': task.activeState === 'subtasks'}" ng-click="task.activeState = 'subtasks'">
+                                            <i class="material-icons" ng-class="{'active': task.activeState === 'subtasks'}">list</i> Subtasks</a>
+                                    </li>
+                                    <li hover-link>
+                                        <a href="" class="youlink" ng-class="{'active': task.activeState === 'notes'}" ng-click="task.activeState = 'notes'">
+                                            <i class="material-icons" ng-class="{'active': task.activeState === 'notes'}">description</i> Notes</a>
+                                    </li>
+                                    <li hover-link>
+                                        <a href="" class="youlink" ng-class="{'active': task.activeState === 'comments'}" ng-click="task.activeState = 'comments'">
+                                            <i class="material-icons" ng-class="{'active': task.activeState === 'comments'}">comment</i> Comments</a>
+                                    </li>
+                                    <li hover-link>
+                                        <a href="" class="youlink" ng-class="{'active': task.activeState === 'files'}" ng-click="task.activeState = 'files'">
+                                            <i class="material-icons" ng-class="{'active': task.activeState === 'files'}">attach_file</i> Files</a>
+                                    </li>
+                                    <li hover-link>
+                                        <a href="" class="youlink" ng-class="{'active': task.activeState === 'assigned_users'}" ng-click="task.activeState = 'assigned_users'">
+                                            <i class="material-icons" ng-class="{'active': task.activeState === 'assigned_users'}">person_add</i> Assign</a>
+                                    </li>
+                                    <li hover-link>
+                                        <a href="" class="youlink" ng-class="{'active': task.activeState === 'share'}" ng-click="task.activeState = 'share'">
+                                            <i class="material-icons" ng-class="{'active': task.activeState === 'share'}">share</i> Share</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="yp-task-inner-content" ng-repeat="(key, child) in task.child" ng-show="key === task.activeState" ng-switch on="task.activeState">
+                                <!-- task details -->
+                                <div class="yp-task-details-container" ng-switch-when="taskdetails">
+                                    <div class="header">
+                                        <i class="material-icons">edit</i>
+                                        <p>Task</p>
+                                        <p ng-if="!isEditTask" style="color: #000;font-size: 1.4rem;">{{task.name}}</p>
+                                        <form ng-submit="vm.updateTask(task, 'date', false);isEditTask = !isEditTask">
+                                            <input type="text" placeholder="Editing your task..." ng-model="task.name" ng-if="!!isEditTask" ng-focus="!!isEditTask">
+                                        </form>
+                                        <p><span ng-click="isEditTask = !isEditTask">{{isEditTask ? 'Cancel' : 'Edit'}}</span></p>
+                                    </div>
+                                    <div class="actions">
+                                        <p ng-click="vm.updateTask(task, 'starred');"><a href=""><i class="material-icons">star_border</i> {{task.starred ? 'Unstar this task' : 'Star this task'}}</a></p>
+                                        <span uib-dropdown>
+                                            <p id="task-sub-taskdetail-action" uib-dropdown-toggle>
+                                                <a href="" class="no-highlight"><i class="material-icons">error_outline</i> Set a priority</a>
+                                            </p>
+                                            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="task-sub-taskdetail-action">
+                                                <li role="menuitem" ng-repeat="option in vm.priorityOptions">
+                                                    <a href="" ng-click="vm.updateTask(task, 'priorities', option.name)">
+                                                        {{option.name}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </span>
+                                        <!--<p uib-dropdown-toggle><a href="" ng-click="$event.preventDefault()" class="no-highlight"><i class="material-icons">error_outline</i> Set a priority</a></p>-->
+                                        <!--<ul uib-dropdown-menu role="menu">-->
+                                            <!--<li role="menuitem" ng-repeat="option in vm.priorityOptions">-->
+                                                <!--<a href="" ng-click="vm.updateTask(task, 'priorities', option.name)">-->
+                                                    <!--{{option.name}}-->
+                                                <!--</a>-->
+                                            <!--</li>-->
+                                        <!--</ul>-->
+                                        <p ng-click="vm.openStatuses()"><a href=""><i class="material-icons">timeline</i> Set a status</a></p>
+                                    </div>
+                                    <div class="contents">
+                                        <div class="row">
+                                            <div class="col-md-6 left-column">
+                                                <div class="row">
+                                                    <div class="col-md-7">
+                                                        <div class="start-date">
+                                                            <i class="material-icons date-time">access_time</i>
+                                                            <p>Start Date</p>
+                                                            <input id="start-date" placeholder="Select date" class="date-input" type="text" ng-click="vm.showDatePicker($event, task, 'start_date')" ng-value="vm.changeToDate(task.start_date)">
+                                                            <i class="material-icons down" ng-click="vm.showDatePicker($event, task, 'start_date')">arrow_drop_down</i>
+                                                            <!--<input id="start-date" placeholder="Select date" class="date-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/start-date.view.html'" ng-value="vm.changeToDate(task.start_date)">-->
+                                                            <!--<i class="material-icons down" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/start-date.view.html'">arrow_drop_down</i>-->
+                                                        </div>
+                                                        <div class="due-date">
+                                                            <i class="material-icons date-time">access_time</i>
+                                                            <p>Due Date</p>
+                                                            <input id="end-date" placeholder="Select date" class="date-input" type="text" ng-click="vm.showDatePicker($event, task, 'end_date')" ng-value="vm.changeToDate(task.end_date)">
+                                                            <i class="material-icons down" ng-click="vm.showDatePicker($event, task, 'end_date')">arrow_drop_down</i>
+                                                            <!--<input id="end-date" placeholder="Select date" class="date-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/end-date.view.html'" ng-value="vm.changeToDate(task.end_date)">-->
+                                                            <!--<i class="material-icons down" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/end-date.view.html'">arrow_drop_down</i>-->
+                                                        </div>
+                                                        <div class="repeat">
+                                                            <i class="material-icons date-time">repeat</i>
+                                                            <p>Repeat</p>
+                                                            <md-select ng-model="task.repeat" aria-label="repeat">
+                                                                <md-option ng-repeat="repeat in vm.repeats.repeat">
+                                                                    {{repeat}}
+                                                                </md-option>
+                                                            </md-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="yp-time">
+                                                            <p></p>
+                                                            <input placeholder="Select time" class="time-input" type="text" ng-click="vm.showTimePicker($event, task, 'start_date_time')" ng-value="vm.changeToTime(task.start_date_time)">
+                                                            <i class="material-icons" ng-click="vm.showTimePicker($event, task, 'start_date_time')">arrow_drop_down</i>
+                                                            <!--<input placeholder="Select time" class="time-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/start-date-time.view.html'" ng-value="vm.changeToTime(task.start_date_time)">-->
+                                                            <!--<i class="material-icons" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/start-date-time.view.html'">arrow_drop_down</i>-->
+                                                        </div>
+                                                        <div class="yp-time">
+                                                            <p></p>
+                                                            <input placeholder="Select time" class="time-input" type="text" ng-click="vm.showTimePicker($event, task, 'end_date_time')" ng-value="vm.changeToTime(task.end_date_time)">
+                                                            <i class="material-icons" ng-click="vm.showTimePicker($event, task, 'end_date_time')">arrow_drop_down</i>
+                                                            <!--<input placeholder="Select time" class="time-input" type="text" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/end-date-time.view.html'" ng-value="vm.changeToTime(task.end_date_time)">-->
+                                                            <!--<i class="material-icons" popover-placement="right" popover-trigger="outsideClick" uib-popover-template="'app/components/tasks/popover/end-date-time.view.html'">arrow_drop_down</i>-->
+                                                        </div>
+                                                        <div class="repeat-from">
+                                                            <p>Repeat From</p>
+                                                            <md-select ng-model="task.repeat_from" aria-label="repeat_from">
+                                                                <md-option ng-repeat="repeat in vm.repeats.from">
+                                                                    {{repeat}}
+                                                                </md-option>
+                                                            </md-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 right-column">
+                                                <div class="folder">
+                                                    <i class="material-icons">folder_open</i>
+                                                    <p>Folder</p>
+                                                    <form ng-submit="vm.saveFolder(task)">
+                                                        <md-autocomplete md-search-text="vm.folder.name" md-items="folder in vm.folders | filter:vm.folder.name" md-item-text="folder.name" md-min-length="0" placeholder="Which folder to insert?" ng-blur="task.folder">
+                                                            <md-item-template>
+                                                                <span md-highlight-text="vm.folder.name" md-highlight-flags="^i">{{folder.name}}</span>
+                                                            </md-item-template>
+                                                            <md-not-found>
+                                                                <a ng-click="vm.saveFolder(vm.folder.name)">Create a new one!</a>
+                                                            </md-not-found>
+                                                        </md-autocomplete>
+                                                    </form>
+                                                </div>
+                                                <!--<div class="project">-->
+                                                <!--<i class="material-icons">view_column</i>-->
+                                                <!--<p>Project</p>-->
+                                                <!--<md-input-container>-->
+                                                <!--<label>Project</label>-->
+                                                <!--<input ng-model="user.title">-->
+                                                <!--</md-input-container>-->
+                                                <!--</div>-->
+                                                <div class="tags">
+                                                    <i class="material-icons">label_outline</i>
+                                                    <p>Tags</p>
+                                                    <tags-input on-tag-added="vm.addTag($tag, task)" on-tag-removed="vm.deleteTag($tag)" placeholder="Add a tag" display-property="name" ng-model="task.child.tags">
+                                                        <auto-complete source="vm.loadTags($query)" max-results-to-show="10" load-on-focus="true" debounce-delay="0">
+                                                        </auto-complete>
+                                                    </tags-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="task-created">Task created via <span>desktop</span> on Fri, 10 Jan 2016 at 12:10 PM</p>
+                                    <p class="task-completed">Task was compeleted on Sat, 11 Jan 2016 at 5:50 PM <i class="material-icons">check</i></p>
+                                </div>
+                                <!-- subtask -->
+                                <div class="yp-subtask-container" ng-switch-when="subtasks">
+                                    <div class="yp-subtask-header" ng-repeat="subtask in child track by $index">
+                                        <section class="actions" uib-dropdown>
+                                            <i class="material-icons" ng-click="vm.updateTask(subtask, 'status')">{{!!subtask.status ? 'check_box' : 'check_box_outline_blank'}}</i>
+                                            <i class="material-icons" uib-dropdown-toggle style="cursor: pointer;">more_vert</i>
+                                            <ul uib-dropdown-menu role="menu" aria-labelledby="menu-priority">
+                                                <li role="menuitem">
+                                                    <a href="" ng-click="vm.updateTask(subtask, 'starred');"><i class="material-icons" star-color starred="subtask.starred">star</i> {{subtask.starred ? 'Unstar this task' : 'Star this task'}}</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li role="menuitem">
+                                                    <a href="" class="no-highlight">Set a priority</a>
+                                                    <a ng-click="vm.updateTask(subtask, 'priorities', 'High')" href=""><i class="material-icons" style="color: #a51c1c;">error</i> High</a>
+                                                    <a ng-click="vm.updateTask(subtask, 'priorities', 'Normal')" href=""><i class="material-icons" style="color: #1d9622;">error</i> Normal</a>
+                                                    <a ng-click="vm.updateTask(subtask, 'priorities', 'Low')" href=""><i class="material-icons" style="color: #f39c12;">error</i> Low</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li role="menuitem">
+                                                    <a href="" ng-click="vm.updateTask(subtask, 'status')"><i class="material-icons">timeline</i> Set a status</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li role="menuitem"><a href="" ng-click="vm.deleteTask(task, subtask)"><i class="material-icons">delete</i> Delete task</a></li>
+                                            </ul>
+                                        </section>
+                                        <section class="details">
+                                            {{subtask.name}}
+                                        </section>
+                                        <section class="status">
+                                            <i class="material-icons starred" ng-if="!!subtask.starred">star</i>
+                                            <i class="material-icons" style="color: #a51c1c;" ng-if="subtask.priority == 'High'">error</i>
+                                            <i class="material-icons" style="color: #1d9622;" ng-if="subtask.priority == 'Normal'">error</i>
+                                            <i class="material-icons" style="color: #f39c12;" ng-if="subtask.priority == 'Low'">error</i> {{subtask.created_at ? (subtask.created_at | youDate) : 'No date'}}
+                                        </section>
+                                    </div>
+                                    <form name="form" ng-submit="vm.createTask(task)" role="form">
+                                        <div id="yp-subtask-input-container">
+                                            <div class="profile-image">
+                                                <div class="profile-circle">
+                                                    <img back-image="globals.currentUser.s3_file_uri_user_photo" back-image-width="38" back-image-height="38">
+                                                </div>
+                                            </div>
+                                            <input type="text" placeholder="Add your subtask here..." ng-model="vm.subtask.name" required>
+                                            <div class="actions">
+                                                <button type="submit" class="btn btn-default btn-circle"><i class="material-icons">add</i></button>
+                                                <button type="submit" class="btn btn-default btn-circle"><i class="material-icons">more_horiz</i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- notes -->
+                                <div class="yp-notes-container" ng-switch-when="notes">
+                                    <div class="controls">
+                                        <i class="material-icons" ng-click="vm.noteCommand('bold')">format_bold</i>
+                                        <i class="material-icons" ng-click="vm.noteCommand('italic')">format_italic</i>
+                                        <i class="material-icons" ng-click="vm.noteCommand('strikeThrough')">strikethrough_s</i>
+                                        <i class="material-icons" ng-click="vm.noteCommand('bold')">format_italic</i>
+                                        <i class="material-icons">format_quote</i>
+                                        <i class="material-icons" ng-click="vm.noteCommand('formatblock')">code</i>
+                                        <i class="material-icons" ng-click="vm.noteCommand('insertunorderedlist')">format_list_bulleted</i>
+                                        <i class="material-icons" ng-click="vm.noteCommand('insertorderedlist')">format_list_numbered</i>
+                                        <i class="material-icons">format_indent_decrease</i>
+                                        <i class="material-icons">format_indent_increase</i>
+                                        <i class="material-icons">attach_file</i>
+                                        <i class="material-icons">camera_alt</i>
+                                    </div>
+                                    <div class="text-container">
+                                        <div class="note-input" ng-model="task.child.notes.note" contenteditable ng-keyup="vm.saveNote(task)"></div>
+                                    </div>
+                                </div>
+                                <!-- comments -->
+                                <div class="yp-comments-container" ng-switch-when="comments">
+                                    <div class="comments-box" ng-scroll-bottom="child">
+                                        <div class="yp-comment" ng-repeat="comment in child track by $index">
+                                            <div class="profile-image">
+                                                <div class="profile-circle">
+                                                    <img back-image="globals.currentUser.s3_file_uri_user_photo" back-image-width="38" back-image-height="38">
+                                                </div>
+                                            </div>
+                                            <p class="name">{{vm.commentDetails(comment, task, 'first_name')}} {{vm.commentDetails(comment, task, 'last_name')}} <span class="posted">Posted on {{vm.chatDate(comment.created_at)}} via <span class="desktop">web</span> <span class="circle">.</span> {{comment.fromNow}}</span>
+                                            </p>
+                                            <p class="comment-details" ng-if="!comment.isEdit">
+                                                {{comment.comment}}
+                                            </p>
+                                            <p class="comment-details">
+                                                <form ng-submit="vm.updateComment(comment);comment.isEdit = !comment.isEdit">
+                                                    <input type="text" ng-model="comment.comment" class="edit" ng-if="!!comment.isEdit">
+                                                </form>
+                                            </p>
+                                            <p class="controls">
+                                                <i class="material-icons">thumb_up</i> Like
+                                                <span class="circle" ng-if="globals.currentUser.user_id == comment.user_id">.</span> <span ng-if="globals.currentUser.user_id == comment.user_id" ng-click="comment.isEdit = !comment.isEdit">Edit</span>
+                                                <span class="circle" ng-if="comment.created_at != comment.updated_at">.</span> <span ng-if="comment.created_at != comment.updated_at">Last edited on {{vm.chatDate(comment.updated_at)}}</span>
+                                                <span class="circle" ng-if="globals.currentUser.user_id == comment.user_id">.</span> <span ng-if="globals.currentUser.user_id == comment.user_id" ng-click="vm.deleteComment(task, comment)">Delete</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <form name="form" ng-submit="vm.createComment(task)" role="form">
+                                        <div id="yp-comment-input-container">
+                                            <i class="material-icons more">more_vert</i>
+                                            <div class="profile-image">
+                                                <div class="profile-circle">
+                                                    <img back-image="globals.currentUser.s3_file_uri_user_photo" back-image-width="38" back-image-height="38">
+                                                </div>
+                                            </div>
+                                            <input type="text" placeholder="Add your comment..." ng-model="vm.comment.comment" required>
+                                            <div class="actions">
+                                                <button type="submit" class="btn btn-default btn-circle"><i class="material-icons">send</i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- files -->
+                                <div class="yp-file-container" ng-switch-when="files">
+                                    <div class="header">
+                                        <div class="actions">
+                                            <button type="submit" class="btn btn-default btn-circle" ngf-select="upload($files, task)" ngf-multiple="true"><i class="material-icons">add</i></button>
+                                            <button type="submit" class="btn btn-default btn-circle" ng-click="upload($files, task)" ngf-multiple="true"><i class="material-icons">file_upload</i></button>
+                                        </div>
+                                        <div class="drag-container" ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" ng-model="files" ngf-drop="upload($files, task)">
+                                            <p>Choose files to upload to your task. You can select more than one file at a time.
+                                                <br> You can also drag and drop files anywhere on here.</p>
+                                            <p ng-repeat="f in files"><b>{{f.name}} {{f.$error}} {{f.$errorParam}}</b></p>
+                                        </div>
+                                    </div>
+                                    <div class="labels">
+                                        <div class="name">Name <i class="material-icons">arrow_upwards</i></div>
+                                        <div class="uploaded-by">Uploaded by</div>
+                                        <div class="date-added">Date added</div>
+                                    </div>
+                                    <div class="file" ng-repeat="fi in child track by $index">
+                                        <div class="file-name">
+                                            <!--<i class="fa file-img {{fi.mime == 'image/jpeg' ? 'fa-file-image-o pdf' : 'fa-file-word-o word'}}" file-color type="fi.mime"></i> <a target="_self" href="{{fi.s3_file_uri}}" download="{{fi.file_name}}">{{fi.file_name ? fi.file_name : fi.file}}</a> <span class="size">(20 KB)</span></div>-->
+                                            <i class="fa file-img" file-color type="fi.mime"></i> <a target="_self" href="{{fi.s3_file_uri}}" download="{{fi.file_name}}">{{fi.file_name ? fi.file_name : fi.file}}</a> <span class="size">{{fi.file_size ? '(' + fi.file_size + ')' : ''}}</span></div>
+                                        <span ng-if="!!vm.slug.file">Share this link: {{vm.slug.file}}</span>
+                                        <div class="uploader">
+                                            <div class="profile-circle">
+                                                <img back-image="fi.s3_file_uri_user_photo" back-image-width="20" back-image-height="20" src="">
+                                            </div>
+                                            {{globals.currentUser.first_name}} {{globals.currentUser.last_name.substr(0, 1)}}.
+                                        </div>
+                                        <div class="date-controls" uib-dropdown>
+                                            {{fi.created_at | youDate}}
+                                            <i class="material-icons" uib-dropdown-toggle id="more-files" style="cursor:pointer;">more_vert</i>
+                                            <ul uib-dropdown-menu role="menu" aria-labelledby="more-files">
+                                                <li role="menuitem"><a href="" ng-click="vm.generateLink(fi, 'file')">Share this file</a></li>
+                                                <li role="menuitem" ng-if="globals.currentUser.user_id == fi.user_id"><a href="" ng-click="vm.deleteFile(task, fi)">Delete file</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- assign -->
+                                <div class="yp-assign-container" ng-switch-when="assigned_users">
+                                    <form name="form" ng-submit="vm.assignUserTask(task)" role="form">
+                                        <div class="yp-assign-input">
+                                            <input type="text" placeholder="Delegate this task to other users. One task can have many users. Start typing someone's name..." ng-model="vm.assign" required>
+                                            <div class="actions">
+                                                <button type="submit" class="btn btn-default btn-circle"><i class="material-icons">add</i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="assigned-user" ng-repeat="user in child">
+                                        <div class="profile-image">
+                                            <div class="profile-circle">
+                                                <img back-image="user.s3_file_uri" back-image-width="38" back-image-height="38">
+                                            </div>
+                                        </div>
+                                        <div class="name">{{user.username}}</div>
+                                        <div class="task" uib-dropdown>
+                                            Assigned task
+                                            <i class="material-icons more" uib-dropdown-toggle id="more-actions-assigned" style="cursor:pointer;">more_vert</i>
+                                            <ul uib-dropdown-menu role="menu" aria-labelledby="more-actions-assigned">
+                                                <li role="menuitem">
+                                                    <a href="" ng-click="vm.deleteUserTask(task);">Delete User</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- share -->
+                                <div class="yp-share-container" ng-switch-when="share">
+                                    <div class="generate-link" ng-click="vm.generateLink(task, 'task')">
+                                        <button type="button" class="btn btn-default btn-circle"><i class="material-icons">link</i></button>
+                                        {{(task.child.urlSlug.length > 0 || !!vm.slug.task) ? 'Generated link' : 'Click to generate a public web address to share this task'}}
+                                        <p ng-if="!!vm.slug.task" class="link" contenteditable link-select>{{vm.slug.task}}</p>
+                                        <p ng-if="!vm.slug.task && !!task.child.urlSlug[0].slug" class="link" contenteditable link-select>{{task.child.urlSlug[0].slug}}</p>
+                                    </div>
+                                    <div class="send-email">
+                                        <button type="button" class="btn btn-default btn-circle"><i class="material-icons">mail_outline</i></button>
+                                        Send this task as an email
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <script type="text/ng-template" id="time-date.tpl">
+                            <div ng-class="modeClass()" class="time-date">
+                                <div ng-click="modeSwitch()" class="display">
+                                    <div class="title">{{display.title()}}</div>
+                                    <div class="content">
+                                        <div class="super-title">{{display.super()}}</div>
+                                        <div ng-bind-html="display.main()" class="main-title"></div>
+                                        <div class="sub-title">{{display.sub()}}</div>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div class="slider">
+                                        <div class="date-control">
+                                            <div class="title"><span class="month-part">{{date | date:'MMMM'}}
+                                                <select ng-model="calendar._month" ng-change="calendar.monthChange()" ng-options="calendar._months.indexOf(month) as month for month in calendar._months"></select></span>
+                                                <input ng-model="calendar._year" ng-change="calendar.monthChange()" type="number" class="year-part" />
+                                            </div>
+                                            <div class="headers">
+                                                <div class="day-cell">S</div>
+                                                <div class="day-cell">M</div>
+                                                <div class="day-cell">T</div>
+                                                <div class="day-cell">W</div>
+                                                <div class="day-cell">T</div>
+                                                <div class="day-cell">F</div>
+                                                <div class="day-cell">S</div>
+                                            </div>
+                                            <div class="days">
+                                                <div ng-style="{'margin-left': calendar.offsetMargin()}" ng-class="calendar.class(1)" ng-show="calendar.isVisible(1)" ng-click="calendar.select(1)" class="day-cell">1</div>
+                                                <div ng-class="calendar.class(2)" ng-show="calendar.isVisible(2)" ng-click="calendar.select(2)" class="day-cell">2</div>
+                                                <div ng-class="calendar.class(3)" ng-show="calendar.isVisible(3)" ng-click="calendar.select(3)" class="day-cell">3</div>
+                                                <div ng-class="calendar.class(4)" ng-show="calendar.isVisible(4)" ng-click="calendar.select(4)" class="day-cell">4</div>
+                                                <div ng-class="calendar.class(5)" ng-show="calendar.isVisible(5)" ng-click="calendar.select(5)" class="day-cell">5</div>
+                                                <div ng-class="calendar.class(6)" ng-show="calendar.isVisible(6)" ng-click="calendar.select(6)" class="day-cell">6</div>
+                                                <div ng-class="calendar.class(7)" ng-show="calendar.isVisible(7)" ng-click="calendar.select(7)" class="day-cell">7</div>
+                                                <div ng-class="calendar.class(8)" ng-show="calendar.isVisible(8)" ng-click="calendar.select(8)" class="day-cell">8</div>
+                                                <div ng-class="calendar.class(9)" ng-show="calendar.isVisible(9)" ng-click="calendar.select(9)" class="day-cell">9</div>
+                                                <div ng-class="calendar.class(10)" ng-show="calendar.isVisible(10)" ng-click="calendar.select(10)" class="day-cell">10</div>
+                                                <div ng-class="calendar.class(11)" ng-show="calendar.isVisible(11)" ng-click="calendar.select(11)" class="day-cell">11</div>
+                                                <div ng-class="calendar.class(12)" ng-show="calendar.isVisible(12)" ng-click="calendar.select(12)" class="day-cell">12</div>
+                                                <div ng-class="calendar.class(13)" ng-show="calendar.isVisible(13)" ng-click="calendar.select(13)" class="day-cell">13</div>
+                                                <div ng-class="calendar.class(14)" ng-show="calendar.isVisible(14)" ng-click="calendar.select(14)" class="day-cell">14</div>
+                                                <div ng-class="calendar.class(15)" ng-show="calendar.isVisible(15)" ng-click="calendar.select(15)" class="day-cell">15</div>
+                                                <div ng-class="calendar.class(16)" ng-show="calendar.isVisible(16)" ng-click="calendar.select(16)" class="day-cell">16</div>
+                                                <div ng-class="calendar.class(17)" ng-show="calendar.isVisible(17)" ng-click="calendar.select(17)" class="day-cell">17</div>
+                                                <div ng-class="calendar.class(18)" ng-show="calendar.isVisible(18)" ng-click="calendar.select(18)" class="day-cell">18</div>
+                                                <div ng-class="calendar.class(19)" ng-show="calendar.isVisible(19)" ng-click="calendar.select(19)" class="day-cell">19</div>
+                                                <div ng-class="calendar.class(20)" ng-show="calendar.isVisible(20)" ng-click="calendar.select(20)" class="day-cell">20</div>
+                                                <div ng-class="calendar.class(21)" ng-show="calendar.isVisible(21)" ng-click="calendar.select(21)" class="day-cell">21</div>
+                                                <div ng-class="calendar.class(22)" ng-show="calendar.isVisible(22)" ng-click="calendar.select(22)" class="day-cell">22</div>
+                                                <div ng-class="calendar.class(23)" ng-show="calendar.isVisible(23)" ng-click="calendar.select(23)" class="day-cell">23</div>
+                                                <div ng-class="calendar.class(24)" ng-show="calendar.isVisible(24)" ng-click="calendar.select(24)" class="day-cell">24</div>
+                                                <div ng-class="calendar.class(25)" ng-show="calendar.isVisible(25)" ng-click="calendar.select(25)" class="day-cell">25</div>
+                                                <div ng-class="calendar.class(26)" ng-show="calendar.isVisible(26)" ng-click="calendar.select(26)" class="day-cell">26</div>
+                                                <div ng-class="calendar.class(27)" ng-show="calendar.isVisible(27)" ng-click="calendar.select(27)" class="day-cell">27</div>
+                                                <div ng-class="calendar.class(28)" ng-show="calendar.isVisible(28)" ng-click="calendar.select(28)" class="day-cell">28</div>
+                                                <div ng-class="calendar.class(29)" ng-show="calendar.isVisible(29)" ng-click="calendar.select(29)" class="day-cell">29</div>
+                                                <div ng-class="calendar.class(30)" ng-show="calendar.isVisible(30)" ng-click="calendar.select(30)" class="day-cell">30</div>
+                                                <div ng-class="calendar.class(31)" ng-show="calendar.isVisible(31)" ng-click="calendar.select(31)" class="day-cell">31</div>
+                                            </div>
+                                        </div>
+                                        <div ng-click="modeSwitch()" class="button switch-control"><i class="fa fa-clock-o"></i><i class="fa fa-calendar"></i></div>
+                                        <div class="time-control">
+                                            <div class="clock">
+                                                <div class="clock-face">
+                                                    <div class="center"></div>
+                                                    <div ng-click="clock.setHour(1)" ng-class="{'selected': clock._hour() == 1}" class="hand">1</div>
+                                                    <div ng-click="clock.setHour(2)" ng-class="{'selected': clock._hour() == 2}" class="hand">2</div>
+                                                    <div ng-click="clock.setHour(3)" ng-class="{'selected': clock._hour() == 3}" class="hand">3</div>
+                                                    <div ng-click="clock.setHour(4)" ng-class="{'selected': clock._hour() == 4}" class="hand">4</div>
+                                                    <div ng-click="clock.setHour(5)" ng-class="{'selected': clock._hour() == 5}" class="hand">5</div>
+                                                    <div ng-click="clock.setHour(6)" ng-class="{'selected': clock._hour() == 6}" class="hand">6</div>
+                                                    <div ng-click="clock.setHour(7)" ng-class="{'selected': clock._hour() == 7}" class="hand">7</div>
+                                                    <div ng-click="clock.setHour(8)" ng-class="{'selected': clock._hour() == 8}" class="hand">8</div>
+                                                    <div ng-click="clock.setHour(9)" ng-class="{'selected': clock._hour() == 9}" class="hand">9</div>
+                                                    <div ng-click="clock.setHour(10)" ng-class="{'selected': clock._hour() == 10}" class="hand">10</div>
+                                                    <div ng-click="clock.setHour(11)" ng-class="{'selected': clock._hour() == 11}" class="hand">11</div>
+                                                    <div ng-click="clock.setHour(12)" ng-class="{'selected': clock._hour() == 12}" class="hand">12</div>
+                                                </div>
+                                            </div>
+                                            <div class="buttons">
+                                                <button ng-click="clock.setAM(true)" ng-class="{'active': clock.isAM()}" type="button" class="btn btn-link pull-left">AM</button>
+                                                <input value="30" type="number" min="0" max="59" ng-model="clock._minutes" />
+                                                <button ng-click="clock.setAM(false)" ng-class="{'active': !clock.isAM()}" type="button" class="btn btn-link pull-right">PM</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="buttons">
+                                    <button ng-click="setNow()" type="button" class="btn btn-link">Now</button>
+                                    <button ng-click="cancel()" type="button" class="btn btn-link">Cancel</button>
+                                    <button ng-click="save()" type="button" class="btn btn-link">OK</button>
+                                </div>
+                            </div>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</section>

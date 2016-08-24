@@ -1,0 +1,9 @@
+<time-date-picker ng-model="task.start_date" display-mode="date" orientation="true" on-save="vm.updateTask(task, 'date', false)"></time-date-picker>
+<ul class="date-selection">
+    <li><a href="" ng-click="vm.dateSelection(task, 'start_date', 'today')">Today</a></li>
+    <li><a href="" ng-click="vm.dateSelection(task, 'start_date', 'tomorrow')">Tomorrow</a></li>
+    <li><a href="" ng-click="vm.dateSelection(task, 'start_date', 'in one week')">In one week</a></li>
+    <li><a href="" ng-click="vm.dateSelection(task, 'start_date', 'in one month')">In one month</a></li>
+    <li><a href="" ng-click="vm.dateSelection(task, 'start_date', 'in one year')">In one year</a></li>
+</ul>
+

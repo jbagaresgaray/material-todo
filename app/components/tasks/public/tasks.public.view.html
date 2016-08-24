@@ -1,0 +1,321 @@
+<div class="container">
+    <div class="cc-center">
+        <div class="task-list">
+            <div class="loading-md-spinner">
+                <md-progress-circular md-mode="indeterminate" ng-show="vm.isRequesting" class="md-primary"></md-progress-circular>
+            </div>
+
+            <div class="sqbg-white-task-item-expanded text-muted text-center" style="padding:15px" ng-show="vm.type=='files'">
+                <b><i class="fa fa-file-image-o"></i> {{vm.files.file_info[0].file_name}}</b>
+                <span style="margin-left: 120px; margin-right: 50px;">Tom C.</span>
+                <span>{{vm.files.file_info[0].created_at | youDate}}</span>
+            </div>
+
+            <div ng-repeat="(group, tasks) in vm.taskgroup track by $index" ng-show="group === vm.activeState" ng-show="vm.type=='tasks'">
+                <!--<div ng-show="tasks.length == 0" class="sqbg-white-task-item-expanded text-muted text-center" style="padding:15px" ng-show="vm.type=='tasks'">-->
+                    <!--<b>{{'No ' + group + ' just yet.'}}</b>-->
+                <!--</div>-->
+                <div class="sqbg-white-task-item-expanded" ng-repeat="task in tasks | orderBy:'-created_at':true | limitTo: vm.limitTo" ng-class="{'sp-tb' : !!task.is_collapsed}">
+                    <div>
+
+                        <div class="swti-center">
+                            <div class="sc-description">
+                                {{task.name}}
+                            </div>
+
+                            <!--<div class="sc-icons">-->
+                            <!--<a href="#"><i class="material-icons">description</i></a>-->
+                            <!--<a href="#"><i class="material-icons">comment</i> <span>3</span></a>-->
+                            <!--<a href="#"><i class="material-icons">folder</i> <span>Home</span></a>-->
+                            <!--<a href="#"><i class="material-icons">label</i> <span>Urgent</span></a>-->
+                            <!--<a href="#"><i class="material-icons">label</i> <span>Todo</span></a>-->
+
+                            <!--<div class="img-div-task-tag">-->
+                            <!--<img ng-src="{{globals.currentUser.s3_file_uri_user_photo}}" err-src="assets/images/user-tom.jpg" width="24px" height="24px" />-->
+                            <!--</div>-->
+                            <!--<span class="task-user-tag-name">Tom C.</span>-->
+                            <!--</div>-->
+                        </div>
+
+                        <div class="swti-right">
+                            <a href=""><i class="material-icons" ng-class="{'starred': !!task.starred}">{{!!task.starred ? 'star' : 'star_border'}}</i></a>
+                            <a href="">
+                                <i class="material-icons"
+                                   ng-class="{'priority-high': task.priority == 'High', 'priority-normal': task.priority == 'Normal', 'priority-low': task.priority == 'Low'}">
+                                    error
+                                </i>
+                            </a>
+                            <div class="swti-r-date">
+                                {{task.created_at}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div>
+                        <div class="task-inner-body">
+                            <div class="tib-menu">
+                                <a href="" ng-class="{'active': task.activeState === 'taskdetails'}" ng-click="task.activeState = 'taskdetails'">
+                                    <i class="material-icons">assignment</i> <b>Task details</b>
+                                </a>
+
+                                <a href="" ng-class="{'active': task.activeState === 'subtasks'}" ng-click="task.activeState = 'subtasks'">
+                                    <i class="material-icons">list</i> <b>Subtasks</b>
+                                </a>
+
+                                <a href="" ng-class="{'active': task.activeState === 'notes'}" ng-click="task.activeState = 'notes'">
+                                    <i class="material-icons">description</i> <b>Notes</b>
+                                </a>
+
+                                <a href="" ng-class="{'active': task.activeState === 'comments'}" ng-click="task.activeState = 'comments'">
+                                    <i class="material-icons">comment</i> <b>Comments</b>
+                                </a>
+
+                                <a href="" ng-class="{'active': task.activeState === 'files'}" ng-click="task.activeState = 'files'">
+                                    <i class="material-icons">attach_file</i> <b>Files</b>
+                                </a>
+
+                                <a href="" ng-class="{'active': task.activeState === 'assigned_users'}" ng-click="task.activeState = 'assigned_users'">
+                                    <i class="material-icons">person_add</i> <b>Assign</b>
+                                </a>
+                            </div>
+
+                            <div class="tib-contents">
+                                <!--<uib-tabset type="pills">-->
+
+                                <div ng-repeat="(key, child) in task.child" ng-show="key === task.activeState">
+                                    <div class="task-subtask-list" ng-if="key === task.activeState && child.length == 0">
+                                        <div class="ssl-item text-center text-muted" ng-class="{'nlf': child.length == 0}">
+                                            <b>{{'No ' + key + ' just yet.'}}</b>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Tasks Details -->
+                                    <div ng-if="task.activeState === 'taskdetails'">
+                                        <div id="task-details">
+                                            <section class="head">
+                                                <div class="td-left">
+                                                    <i class="material-icons va text-muted">edit</i>
+                                                </div>
+                                                <div class="td-right">
+                                                    <p>Task</p>
+                                                    <p>{{task.name}}</p>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </section>
+                                            <!--<section class="actions" uib-dropdown>-->
+                                                <!--<p><md-button><i class="material-icons va text-muted" ng-class="{true: 'starred'}[task.starred]">{{!!task.starred ? 'star' : 'star_border'}}</i> Star this task</md-button></p>-->
+                                                <!--<p><md-button><i class="material-icons va" ng-class="{'priority-high': task.priority == 'High', 'priority-normal': task.priority == 'Normal', 'priority-low': task.priority == 'Low'}">error</i> Set a priority</md-button></p>-->
+                                                <!--<p><md-button><i class="material-icons va text-muted">timeline</i> Set a status</md-button></p>-->
+                                                <!--<div class="clearfix"></div>-->
+                                            <!--</section>-->
+                                            <section class="dates">
+                                                <div class="td-left">
+                                                    <section class="start">
+                                                        <p><i class="material-icons va text-muted">access_time</i> Start date</p>
+                                                        <p><md-datepicker ng-model="task.start_date" md-placeholder="Enter date" ng-disabled="true"></md-datepicker></p>
+                                                    </section>
+                                                    <section class="due-date">
+                                                        <p><i class="material-icons va text-muted">access_time</i> Due date</p>
+                                                        <p><md-datepicker ng-model="task.end_date" md-placeholder="Enter date" ng-disabled="true"></md-datepicker></p>
+                                                    </section>
+                                                    <section class="repeat">
+                                                        <p><i class="material-icons va text-muted">repeat</i> Repeat date</p>
+                                                        <p><md-datepicker ng-model="myDate" md-placeholder="Enter date" ng-disabled="true"></md-datepicker></p>
+                                                    </section>
+                                                    <p class="created">Task created via desktop on Fri, 10 Jan 2016 at 12:10 PM</p>
+                                                </div>
+                                                <div class="td-right">
+                                                    <section class="folder">
+                                                        <p><i class="material-icons va text-muted">folder_open</i> Folder</p>
+                                                        <p>
+                                                            <md-content class="md-padding">
+                                                                <form ng-submit="vm.saveFolder(task)">
+                                                                    <md-autocomplete
+                                                                            md-search-text="vm.folder.name"
+                                                                            md-items="folder in task.folders | filter:vm.folder.name"
+                                                                            md-item-text="folder.name"
+                                                                            md-min-length="0"
+                                                                            placeholder="Which folder to insert?"
+                                                                            ng-disabled="true">
+                                                                        <md-item-template>
+                                                                            <span md-highlight-text="vm.folder.name" md-highlight-flags="^i">{{folder.name}}</span>
+                                                                        </md-item-template>
+                                                                        <md-not-found>
+                                                                            No folder matching "{{vm.folder.name}}" were found.
+                                                                            <a ng-click="vm.saveFolder(vm.folder.name)">Create a new one!</a>
+                                                                        </md-not-found>
+                                                                    </md-autocomplete>
+                                                                </form>
+                                                            </md-content>
+                                                        </p>
+                                                    </section>
+                                                    <section class="project">
+                                                        <p><i class="material-icons va text-muted">view_column</i> Project</p>
+                                                        <p>
+                                                            <md-input-container style="margin:0">
+                                                                <input ng-model="user.title" placeholder="Project" ng-disabled="true">
+                                                            </md-input-container>
+                                                        </p>
+                                                    </section>
+                                                    <section class="tags">
+                                                        <p><i class="material-icons va text-muted">label_outline</i> Tags</p>
+                                                        <p>
+                                                            <tags-input on-tag-added="vm.addTag($tag, task)"
+                                                                        on-tag-removed="vm.deleteTag($tag)"
+                                                                        placeholder="Add a tag"
+                                                                        display-property="name"
+                                                                        ng-model="task.tags"
+                                                                        ng-disabled="true">
+                                                                <auto-complete  source="vm.loadTags($query)"
+                                                                                max-results-to-show="10"
+                                                                                load-on-focus="true"
+                                                                                debounce-delay="0">
+                                                                </auto-complete>
+                                                            </tags-input>
+                                                        </p>
+                                                    </section>
+                                                    <p class="completed">Task was completed on Fri, 10 Jan 2016 at 12:10 PM</p>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                    <!-- Subtasks -->
+                                    <div ng-if="task.activeState === 'subtasks'">
+                                        <div class="task-subtask-list" ng-repeat="subtask in child track by $index">
+                                            <div class="ssl-item">
+
+                                                <div class="ssl-i-center">
+                                                    {{subtask.name}}
+                                                </div>
+
+                                                <div class="ssl-i-right">
+                                                    <div class="swti-r-date">
+                                                        {{subtask.created_at | youDate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Notes -->
+                                    <div ng-if="task.activeState === 'notes'">
+                                        <div id="notes">
+
+                                            <div ng-show="!!vm.isAdding">
+                                                <div class="button-container">
+                                                    <md-button class="nw"><i class="material-icons va text-muted" ng-click="vm.noteCommand('bold')">format_bold</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted" ng-click="vm.noteCommand('italic')">format_italic</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted" ng-click="vm.noteCommand('strikeThrough')">strikethrough_s</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted" ng-click="vm.noteCommand('bold')">format_italic</i></md-button>
+                                                    <span class="divider"></span>
+                                                    <md-button class="nw"><i class="material-icons va text-muted">format_quote</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted" ng-click="vm.noteCommand('formatblock')">code</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted" ng-click="vm.noteCommand('insertunorderedlist')">format_list_bulleted</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted" ng-click="vm.noteCommand('insertorderedlist')">format_list_numbered</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted">format_indent_decrease</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted">format_indent_increase</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted">attach_file</i></md-button>
+                                                    <md-button class="nw"><i class="material-icons va text-muted">camera_alt</i></md-button>
+                                                </div>
+                                                <div class="text-container">
+                                                    <!--<textarea cols="60" rows="100" class="note-input" placeholder="Type in your notes" required ng-model="vm.note.note" contenteditable></textarea>-->
+                                                    <div class="note-input" ng-model="vm.note.note" contenteditable></div>
+                                                    <button class="btn btn-default" ng-click="vm.isAdding = !vm.isAdding">Cancel</button>
+                                                </div>
+                                            </div>
+                                            <div ng-show="!vm.isAdding">
+                                                <div class="tn-mid-container">
+                                                    <p ng-repeat="note in child track by $index" ng-click="vm.note = note;vm.isAdding = true;">{{note.note | htmlToPlaintext}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Comments -->
+                                    <div ng-if="task.activeState === 'comments'">
+                                        <div id="comments">
+                                            <div class="inner">
+                                                <!--<div class="co-container" ng-if="vm.comments.length == 0">-->
+                                                <div class="co-container" ng-if="task.child.comments.length == 0">
+                                                    <p class="text-center">No comments just yet.</p>
+                                                </div>
+                                                <div class="co-container" ng-repeat="comment in child track by $index ">
+                                                    <section class="co-left-pic">
+                                                        <img class="profile-img" ng-src="{{globals.currentUser.s3_file_uri_user_photo}}" err-src="assets/images/user-tom.jpg" width="44px" height="44px" />
+                                                    </section>
+                                                    <section class="co-right-details">
+                                                        <p><b class="name">{{username}}</b>&nbsp;&nbsp;<span class="posted">Posted {{comment.created_at}} via browser {{comment.fromNow}}</span></p>
+                                                        <p>{{comment.comment}}</p>
+                                                        <ul class="actions">
+                                                            <li><i class="material-icons va text-muted">thumb_up</i> Like</li>
+                                                            <li>Notfied 1 person</li>
+                                                            <li>Edit</li>
+                                                            <li>Delete</li>
+                                                            <p class="clearfix"></p>
+                                                        </ul>
+                                                    </section>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- files -->
+                                    <div ng-if="task.activeState === 'files'">
+                                        <div id="files">
+                                            <div class="mid">
+                                                <div class="name">Name <i class="material-icons va">arrow_upwards</i></div>
+                                                <div class="labels">
+                                                    <span>Uploaded by</span>
+                                                    <span>Date Added</span>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <!--<div class="content" ng-if="task.files.length == 0 || !task.files">-->
+                                            <!--<p>No files just yet.</p>-->
+                                            <!--</div>-->
+                                            <div class="content" ng-repeat="fi in child track by $index">
+                                                <div class="file-container">
+                                                    <div class="description">
+                                                        <!--<i class="fa fa-file-word-o" ng-class="{'fa-file-word-o' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'fa-file-image-o' : 'image/jpeg'}"></i> {{fi.file_name}}-->
+                                                        <i class="fa {{fi.mime == 'image/jpeg' ? 'fa-file-image-o' : 'fa-file-word-o'}}"></i> {{fi.file_name ? fi.file_name : fi.file}}
+                                                    </div>
+                                                    <div class="labels">
+                                                        <div class="img-div-task-tag">
+                                                            <img ng-src="{{fi.s3_file_uri}}" err-src="assets/images/user-tom.jpg" width="24px" height="24px" />
+                                                        </div>
+                                                        <span class="task-user-tag-name">{{username}}</span>
+                                                        <span class="task-user-tag-name">{{fi.created_at | youDate}}</span>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- assign -->
+                                    <div ng-if="task.activeState === 'assigned_users'">
+                                        <div id="assign">
+                                            <div class="content" ng-repeat="user in child">
+                                                <div class="content-col-1">
+                                                    <div class="cc1-user-info">
+                                                        <img class="profile-img" ng-src="{{user.s3_file_uri ? user.s3_file_uri : 'assets/images/user-tom.jpg'}}" err-src="assets/images/user-tom.jpg" width="44px" height="44px" />
+                                                        <b>{{user.username}}</b>
+                                                    </div>
+                                                </div>
+                                                <div class="content-col-2">
+                                                    <div class="cc2-user-roles">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

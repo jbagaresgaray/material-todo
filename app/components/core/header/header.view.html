@@ -1,0 +1,94 @@
+<div class="header-container">
+    <div class="container-fluid">
+        <div class="row">
+	        <div class="col-sm-2"  id="topbar-left">
+		        <a href="" hide-left-column class="topbar-square-menu" id="topbar-square-menu"><i class="material-icons topbar-menu-icon">menu</i></a>
+	            <a href="" class="topbar-logo"><img src="./assets/images/logo.png" /></a>
+			</div>
+
+	        <div class="col-sm-8" id="topbar-middle">
+
+		        <div class="app-menu-wrapper">
+
+			        <div ng-controller="AppMenuCtrl">
+					    <script type="text/ng-template" id="myModalContent.html">
+					        <div class="modal-header">
+					            <h3 class="modal-title">Where do you want to go next?</h3>
+					        </div>
+					        <div class="modal-body row">
+					            <div class="col-xs-4 app-menu-item">
+
+						            <a href="" ui-sref="tasks" ng-click="ok()">
+							            <i class="material-icons">view_list</i>
+							            <br>Tasks
+							        </a>
+
+					            </div>
+					            <div class="col-xs-4 app-menu-item">
+						            <a href="" ui-sref="projects" ng-click="ok()">
+							            <i class="material-icons">equalizer</i>
+							            <br>Projects
+							        </a>
+					            </div>
+					            <div class="col-xs-4 app-menu-item">
+						            <a href="" ui-sref="account" ng-click="ok()">
+							            <i class="material-icons">person</i>
+							            <br>Account
+							        </a>
+					            </div>
+
+					        </div>
+					        <div class="modal-footer">
+					            <button class="btn btn-secondary" type="button" ng-click="cancel()">Close</button>
+					        </div>
+					    </script>
+
+					    <a  class="app-menu-link" id="app-menu-link" ng-click="open()">
+	                    	<i class="material-icons topbar-app-icon">apps</i> <span>{{state.current.data.appTitle}}</span>
+	                	</a>
+					</div>
+
+		        </div>
+		        <div class="topbar-search-wrapper">
+		        	<input class="topbar-search-input" type="text" value="" placeholder="Search" />
+				</div>
+
+	        </div>
+
+	        <div class="col-sm-2" id="topbar-right" style="text-align:right">
+		        <div class="topbar-user-info-menu dropdown" uib-dropdown>
+
+			        <a href="">
+	                    <i class="material-icons topbar-chat-icon" popover-trigger="outsideClick" popover-placement="bottom" uib-popover="This should be for speechbubble by lorem ipsum dolor sit emit" popover-title="Speechbubble chat">chat_bubble_outline</i>
+	                </a>
+
+					<!-- temporary style for notification -->
+	                <a href="" style="position: relative" ng-click="notifications = 0">
+						<span class="badge label-danger" style="position: absolute; bottom: 8px; right: -7px; background-color: red;" ng-if="notifications > 0">{{notifications}}</span>
+	                    <i class="material-icons topbar-notification-icon" popover-trigger="outsideClick" popover-placement="bottom" uib-popover="This should be for speechbubble by lorem ipsum dolor sit emit" popover-title="Speechbubble notification">notifications_none</i>
+	                </a>
+
+
+	                <a href="" class="dropdown-toggle" uib-dropdown-toggle>
+	                    <span class="tb-user-name">
+	                        {{globals.currentUser.first_name}} {{globals.currentUser.last_name.substr(0, 1) + '.'}}
+	                    </span>
+	                    <span class="tb-user-arrow-down">
+	                        <i class="material-icons topbar-arrow-down-icon">keyboard_arrow_down</i>
+	                    </span>
+	                    <span class="img-div">
+							<div class="profile-circle" style="vertical-align: middle">
+								<img back-image="globals.currentUser.s3_file_uri_user_photo" back-image-width="32" back-image-height="32">
+							</div>
+	                    </span>
+	                </a>
+	                <ul class="dropdown-menu">
+	                    <li><a ui-sref="editprofile" href="">Update Profile</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a href="" ng-click="logout()">Logout</a></li>
+	                </ul>
+	            </div>
+	        </div>
+        </div>
+    </div>
+</div>

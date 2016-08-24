@@ -1,0 +1,22 @@
+
+input:focus,*:focus {
+  outline: none;
+}
+
+.profile-circle {
+  display: inline-block;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  vertical-align: middle;
+}
+
+.profile-img {
+  height: 38px;
+  width: 38px;
+  overflow: hidden;
+  border-radius: 50%;
+}

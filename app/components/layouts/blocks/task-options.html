@@ -1,0 +1,121 @@
+<!-- Tags Row -->
+<div class="row">
+    <div class="col-md-12">
+        <label>Tag</label>
+        <p class="custom-width">
+            <!--ng-init="vm.getTags(task)" commented this out for now-->
+            <tags-input on-tag-added="vm.tagAdded($tag, task)"
+                        on-tag-removed="vm.tagRemoved($tag)"
+                        placeholder="Add a tag"
+                        display-property="name"
+                        ng-model="task.tags">
+                <auto-complete  source="loadTags($query)"
+                                max-results-to-show="10"
+                                load-on-focus="true"
+                                debounce-delay="0">
+                </auto-complete>
+            </tags-input>
+        </p>
+    </div>
+</div>
+<!-- Start And End Row -->
+<div class="row">
+    <!-- Start Date -->
+    <div class="col-md-6">
+        <label>Start Date</label>
+        <p class="input-group">
+
+            <input  uib-datepicker-popup="yyyy-mm-dd"
+                    ng-blur="vm.updateTask(task, false, false)"
+                    ng-model="task.start_date"
+                    ng-change="close(task)"
+                    is-open="task.is_open[0]"
+                    class="form-control"
+                    type="text"/>
+              <span class="input-group-btn">
+                <button ng-click="task.is_open[0] = true;"
+                        class="btn btn-default"
+                        type="button">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+        </p>
+    </div>
+    <!-- End Date -->
+    <div class="col-md-6">
+        <label>End Date</label>
+        <p class="input-group">
+
+            <input  uib-datepicker-popup="yyyy-MM-dd"
+                    ng-blur="vm.updateTask(task, false, false)"
+                    ng-model="task.end_date"
+                    ng-change="close(task)"
+                    is-open="task.is_open[1]"
+                    class="form-control"
+                    type="text"/>
+              <span class="input-group-btn">
+                <button ng-click="task.is_open[1] = true;"
+                        class="btn btn-default"
+                        type="button">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+        </p>
+    </div>
+</div>
+<!-- Completion Date Row -->
+<div class="row">
+    <div class="col-md-6">
+        <label>Completion Date</label>
+        <p class="input-group">
+
+            <input  uib-datepicker-popup="yyyy-MM-dd"
+                    ng-blur="vm.updateTask(task, false, false)"
+                    ng-model="task.completion_date"
+                    ng-change="close(task)"
+                    is-open="task.is_open[2]"
+                    class="form-control"
+                    type="text"/>
+              <span class="input-group-btn">
+                <button ng-click="task.is_open[2] = true;"
+                        class="btn btn-default"
+                        type="button">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+        </p>
+    </div>
+</div>
+<!-- Time Row -->
+<div class="row">
+    <!-- Time Spent -->
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="time-spent">Time Spent</label>
+            <input type="text" class="form-control" id="time-spent" placeholder="Time Spent" ng-model="task.time_spent" ng-blur="vm.updateTask(task, false, false)">
+        </div>
+    </div>
+    <!-- Estimate Time -->
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="estimate-time">Estimate Time</label>
+            <input type="text" class="form-control" id="estimate-time" placeholder="Estimate Time" ng-model="task.estimate_time" ng-blur="vm.updateTask(task, false, false)">
+        </div>
+    </div>
+</div>
+<!-- Folder Row -->
+<div class="row">
+    <div class="col-md-4">
+        <p class="input-group">
+            <label for="select-folder">Folder</label>
+            <select ng-options="folder.id as folder.name for folder in folders"
+                    class="form-control" ng-model="task.folder_id"
+                    ng-change="vm.saveTask(task)"
+                    id="select-folder">
+                <option value="">Select folder</option>
+            </select>
+        </p>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+</div>

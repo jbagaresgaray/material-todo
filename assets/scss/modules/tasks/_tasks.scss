@@ -1,0 +1,1041 @@
+#yp-tasks-container {
+  font-size: $default-font-size;
+
+  .row {
+    .left-column {
+      box-sizing: border-box;
+    }
+
+    .right-column {
+      box-sizing: border-box;
+
+      #yp-task-input-container {
+        margin-top: 2.500rem;
+        background: #ffffff;
+        border-radius: 0.300rem;
+        box-shadow: 0 0 0.200rem 0 rgba(36, 36, 36, 0.35);
+        .header {
+          position: relative;
+          padding-left: 6.5rem;
+          padding-right: 12.500rem;
+          padding-top: 2rem;
+          padding-bottom: 2rem;
+
+          input, textarea {
+            width: 100%;
+            background-color: #ffffff;
+            appearance: none;
+            box-shadow: none;
+            border: none;
+            border-radius: 0.300rem;
+            color: #999999;
+            font-size: 1.6rem;
+          }
+          .profile-image {
+            position: absolute;
+            left: 1.3rem;
+            top: 1.3rem;
+          }
+          .actions {
+            position: absolute;
+            right: 1.3rem;
+            top: 1.3rem;
+            button {
+              margin-top: 0;
+              margin-left: 0.500em;
+            }
+          }
+        }
+        .yp-task-details-container {
+          padding-bottom: 6rem;
+          position: relative;
+          .sub-actions {
+            border-top: 1px solid #e9e9e9;
+            border-bottom: 1px solid #e9e9e9;
+            p {
+              display: inline-block;
+              padding: 1.5rem;
+              margin-bottom: 0;
+              a {
+                color: #777;
+                text-decoration: none;
+                i {
+                  color: #777;
+                  margin-right: 0.5rem;
+                  font-size: 2.4rem;
+                  &.starred {
+                    color: #ffc600;
+                  }
+                  &.high {
+                    color: #a51c1c;
+                  }
+                  &.normal {
+                    color: #1d9622;
+                  }
+                  &.low {
+                    color: #f39c12;
+                  }
+                }
+              }
+            }
+          }
+          .contents {
+
+            .left-column {
+
+              .start-date, .due-date, .repeat {
+                padding-left: 4.7rem;
+                //padding-right: 1.8rem;
+                position: relative;
+                margin-top: 2.5rem;
+                i.date-time {
+                  position: absolute;
+                  left: 1.8rem;
+                }
+                p {
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  color: #777;
+                  font-size: 1.3rem;
+                }
+                md-select {
+                  margin: 0;
+                  .md-select-value .md-select-icon {
+                    font-size: 1.2rem;
+                  }
+                }
+                input.date-input {
+                  width: 100%;
+                  background-color: #ffffff;
+                  appearance: none;
+                  box-shadow: none;
+                  border: none;
+                  color: #000;
+                  font-size: 1.4rem;
+                  margin-bottom: .5rem;
+                  padding-bottom: .5rem;
+                  border-bottom: 1px solid rgb(224,224,224);
+                }
+                i.down {
+                  position: absolute;
+                  top: 2.5rem;
+                  right: 0;
+                  font-size: 2.4rem;
+                  cursor: pointer;
+                }
+              }
+              .yp-time, .repeat-from {
+                margin-top: 3rem;
+                position: relative;
+                border-bottom: 1px solid rgb(224,224,224);
+                p {
+                  height: 1.3rem;
+                  color: #777;
+                  font-size: 1.3rem;
+                  &:last-child {
+                    height: auto;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                  }
+                }
+                input.time-input {
+                  width: 100%;
+                  background-color: #ffffff;
+                  appearance: none;
+                  box-shadow: none;
+                  border: none;
+                  color: #000;
+                  font-size: 1.4rem;
+                  //margin-top: .4rem;
+                  margin-bottom: .5rem;
+                }
+                i {
+                  position: absolute;
+                  top: 2.0rem;
+                  right: 0;
+                  font-size: 2.4rem;
+                  cursor: pointer;
+                }
+                md-select {
+                  margin: 0;
+                  .md-select-value .md-select-icon {
+                    font-size: 1.2rem;
+                  }
+                }
+                //margin-top: 5.5rem;
+              }
+              .repeat-from {
+                border-bottom: 0;
+                margin-top: 3.8rem;
+              }
+            }
+            .right-column {
+              position: relative;
+              .folder, .project, .tags {
+                padding-left: 4.7rem;
+                padding-right: 1.8rem;
+                position: relative;
+                &:first-child {
+                  margin-top: 2.4rem;
+                }
+                i {
+                  position: absolute;
+                  left: 1.8rem;
+                }
+                p {
+                  color: #777;
+                  font-size: 1.3rem;
+                }
+                md-autocomplete {
+                  width: 95% !important;
+                  margin-bottom: 1.8rem;
+                  background: #fff;
+                  input {
+                    padding-left: 0;
+                    padding-right: 0;
+                    width: 100%;
+                  }
+                }
+                md-input-container {
+                  width: 95%;
+                  margin: 0;
+                }
+                tags-input {
+                  border-bottom: 1px solid #ececec;
+                  width: 95%;
+                  .tags {
+                    margin-top: 0;
+                    padding-left: 0;
+
+                  }
+                }
+              }
+              .project, .tags {
+                p {
+                  margin-bottom: 0.5rem;
+                }
+              }
+              .tags {
+                padding-left: 4.5rem;
+                p {
+                  margin-bottom: 0;
+                }
+              }
+            }
+          }
+          .reset {
+            position: absolute;
+            left: 1.4rem;
+            bottom: 1.5rem;
+            margin-bottom: 0;
+            color: #777;
+            font-size: 1.3rem;
+            span {
+              border-bottom: 1px dotted #777;
+            }
+          }
+          .multiple {
+            @extend .reset;
+            left: inherit;
+            right: 1.4rem;
+            i {
+              vertical-align: bottom;
+            }
+          }
+        }
+      }
+
+      #yp-tasks-filters {
+        margin-top: 3.200rem;
+        margin-bottom: 1.700rem;
+        padding-right: 2rem;
+        .actions {
+          float: right;
+          i {
+            font-size: 2.4rem;
+            color: #878787;
+            margin-left: 2.4rem;
+          }
+        }
+        md-progress-circular {
+          width: 24px !important;
+          height: 24px !important;
+        }
+      }
+
+      #yp-tasks-inner {
+        position: relative;
+        .yp-task {
+          background: #ffffff;
+          border-radius: 0.300rem;
+          box-shadow: 0 0 0.200rem 0 rgba(36, 36, 36, 0.35);
+          margin-bottom: 0.200rem;
+          &.space {
+            margin-top: 2rem !important;
+            margin-bottom: 2rem !important;
+            padding-bottom: 0;
+          }
+          .yp-task-header {
+            position: relative;
+            padding-left: 10rem;
+            padding-right: 18.5rem;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            .actions {
+              position: absolute;
+              left: 1.2rem;
+              i {
+                font-size: 2.4rem;
+                color: #aaaaaa;
+              }
+            }
+
+            .details {
+              text-align: justify;
+              a {
+                text-decoration: none;
+                color: #000;
+                font-size: 1.4rem;
+                margin-right: 1.5rem;
+              }
+              span {
+                color: #757575;
+                font-size: 1.100rem;
+                margin-right: 1.5rem;
+                &:first-child {
+                  margin-left: 1.5rem;
+                }
+                i {
+                  color: #757575;
+                }
+                &.tiny-profile-name {
+                  margin-left: 0.500rem;
+                }
+              }
+            }
+
+            .status {
+              color: #757575;
+              position: absolute;
+              right: 2rem;
+              top: 1.7rem;
+              font-size: 1.2rem;
+              i {
+                margin-right: 1.5rem;
+                &.starred {
+                  color: #ffc600;
+                }
+                &.high {
+                  color: #a51c1c;
+                }
+                &.normal {
+                  color: #1d9622;
+                }
+                &.low {
+                  color: #f39c12;
+                }
+              }
+            }
+          }
+
+          .yp-task-expanded {
+            min-height: 50.00rem;
+            border-top: 1px solid #ececec;
+            border-bottom-right-radius: 0.300rem;
+            border-bottom-left-radius: 0.300rem;
+            position: relative;
+            padding-left: 13rem;
+            .yp-inner-menus {
+              position: absolute;
+              left: 0;
+              top: 0;
+              padding: 0;
+              margin: 0;
+              padding-top: 2rem;
+              padding-left: 2rem;
+              list-style: none;
+              li {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+                &:first-child {
+                  padding-top: 0;
+                }
+                a {
+                  color: #555;
+                  font-size: 1.2rem;
+                  font-weight: 700;
+                  text-decoration: none;
+                  i {
+                    font-size: 1.600rem;
+                    margin-right: 1rem;
+                    color: #878787;
+                  }
+                }
+              }
+            }
+            .yp-task-inner-content {
+              border-left: 1px solid #ececec;
+              height: 50.00rem;
+              .yp-task-details-container {
+                .header {
+                  border-bottom: 1px solid #e9e9e9;
+                  padding-top: 2rem;
+                  padding-left: 4.5rem;
+                  padding-right: 1.7rem;
+                  padding-bottom: 2.5rem;
+                  position: relative;
+                  i {
+                    position: absolute;
+                    left: 1.7rem;
+                    top: 2rem;
+                    color: #777;
+                  }
+                  p {
+                    font-size: 1.3rem;
+                    color: #777;
+                    margin-bottom: 1rem;
+                    &:last-child {
+                      color: #000;
+                      font-size: 1.4rem;
+                      margin-bottom: 0;
+                    }
+                  }
+                  input {
+                    width: 100%;
+                    background-color: #fff;
+                    appearance: none;
+                    box-shadow: none;
+                    border: none;
+                    border-radius: 0.300rem;
+                    color: #000;
+                    font-size: 1.6rem;
+                    margin-top: 1rem;
+                    border: 1px solid #ececec;
+                    padding: 1rem 1.5rem;
+                    margin-bottom: 1rem;
+                  }
+                }
+                .actions {
+                  border-bottom: 1px solid #e9e9e9;
+                  p {
+                    display: inline-block;
+                    padding: 1.5rem;
+                    margin-bottom: 0;
+                    a {
+                      color: #777;
+                      text-decoration: none;
+                      i {
+                        color: #777;
+                        margin-right: 0.5rem;
+                        font-size: 2.4rem;
+                      }
+                    }
+                  }
+                }
+                .contents {
+
+                  .left-column {
+
+                    .start-date, .due-date, .repeat {
+                      padding-left: 4.7rem;
+                      //padding-right: 1.8rem;
+                      position: relative;
+                      margin-top: 2.5rem;
+                      i.date-time {
+                        position: absolute;
+                        left: 1.8rem;
+                      }
+                      p {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        color: #777;
+                        font-size: 1.3rem;
+                      }
+                      md-select {
+                        margin: 0;
+                        .md-select-value .md-select-icon {
+                          font-size: 1.2rem;
+                        }
+                      }
+                      input.date-input {
+                        width: 100%;
+                        background-color: #ffffff;
+                        appearance: none;
+                        box-shadow: none;
+                        border: none;
+                        color: #000;
+                        font-size: 1.4rem;
+                        margin-bottom: .5rem;
+                        padding-bottom: .5rem;
+                        border-bottom: 1px solid rgb(224,224,224);
+                      }
+                      i.down {
+                        position: absolute;
+                        top: 2.5rem;
+                        right: 0;
+                        font-size: 2.4rem;
+                        cursor: pointer;
+                      }
+                    }
+                    .yp-time, .repeat-from {
+                      margin-top: 3rem;
+                      position: relative;
+                      border-bottom: 1px solid rgb(224,224,224);
+                      p {
+                        height: 1.3rem;
+                        color: #777;
+                        font-size: 1.3rem;
+                        &:last-child {
+                          height: auto;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+
+                        }
+                      }
+                      input.time-input {
+                        width: 100%;
+                        background-color: #ffffff;
+                        appearance: none;
+                        box-shadow: none;
+                        border: none;
+                        color: #000;
+                        font-size: 1.4rem;
+                        //margin-top: .4rem;
+                        margin-bottom: .5rem;
+                      }
+                      i {
+                        position: absolute;
+                        top: 2.0rem;
+                        right: 0;
+                        font-size: 2.4rem;
+                        cursor: pointer;
+                      }
+                      md-select {
+                        margin: 0;
+                        .md-select-value .md-select-icon {
+                          font-size: 1.2rem;
+                        }
+                      }
+                      //margin-top: 5.5rem;
+                    }
+                    .repeat-from {
+                      border-bottom: 0;
+                      margin-top: 3.8rem;
+                    }
+                  }
+                  .right-column {
+                    position: relative;
+                    .folder, .project, .tags {
+                      padding-left: 4.7rem;
+                      padding-right: 1.8rem;
+                      position: relative;
+                      &:first-child {
+                        margin-top: 2.4rem;
+                      }
+                      i {
+                        position: absolute;
+                        left: 1.8rem;
+                      }
+                      p {
+                        color: #777;
+                        font-size: 1.3rem;
+                      }
+                      md-autocomplete {
+                        width: 95% !important;
+                        margin-bottom: 1.8rem;
+                        background: #fff;
+                        input {
+                          padding-left: 5px !important;
+                          font-size: 1.4rem;
+                          padding-right: 0;
+                          width: 100%;
+                        }
+                      }
+                      md-input-container {
+                        width: 95%;
+                        margin: 0;
+                      }
+                      tags-input {
+                        border-bottom: 1px solid #ececec;
+                        width: 95%;
+                        .tags {
+                          margin-top: 0;
+                          padding-left: 0;
+
+                        }
+                      }
+                    }
+                    .project, .tags {
+                      p {
+                        margin-bottom: 0.5rem;
+                      }
+                    }
+                    .tags {
+                      padding-left: 4.5rem;
+                      p {
+                        margin-bottom: 0;
+                      }
+                    }
+                  }
+                }
+                .task-created {
+                  position: absolute;
+                  left: 14.5rem;
+                  bottom: 1.5rem;
+                  margin-bottom: 0;
+                  color: #777;
+                  font-size: 1.3rem;
+                  span {
+                    border-bottom: 1px dotted #777;
+                  }
+                }
+                .task-completed {
+                  @extend .task-created;
+                  left: inherit;
+                  right: 1.4rem;
+                  i {
+                    vertical-align: bottom;
+                  }
+                }
+              }
+              .yp-subtask-container {
+                position: relative;
+                height: 50.00rem;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                &::-webkit-scrollbar {
+                  display: none;
+                }
+                .yp-subtask-header {
+                  position: relative;
+                  padding-left: 7rem;
+                  padding-right: 18.5rem;
+                  padding-top: 2rem;
+                  padding-bottom: 2rem;
+                  .actions {
+                    position: absolute;
+                    left: 1.2rem;
+                    i {
+                      font-size: 2.4rem;
+                      color: #aaaaaa;
+                    }
+                  }
+
+                  .details {
+                    text-align: justify;
+                    span {
+                      color: #757575;
+                      font-size: 1.100rem;
+                      margin-right: 1.5rem;
+                      &:first-child {
+                        margin-left: 1.5rem;
+                      }
+                      i {
+                        color: #757575;
+                      }
+                      &.tiny-profile-name {
+                        margin-left: 0.500rem;
+                      }
+                    }
+                  }
+
+                  .status {
+                    color: #757575;
+                    position: absolute;
+                    right: 2rem;
+                    top: 2rem;
+                    font-size: 1.2rem;
+                    i {
+                      margin-right: 1.5rem;
+                      &.starred {
+                        color: #ffc600;
+                      }
+                      &.high {
+                        color: #a51c1c;
+                      }
+                    }
+                  }
+                }
+                #yp-subtask-input-container {
+                  margin-top: 2.500rem;
+                  background: #ffffff;
+                  padding-left: 6.5rem;
+                  padding-right: 12.500rem;
+                  padding-top: 2rem;
+                  padding-bottom: 2rem;
+                  border-top: 1px solid #ececec;
+                  border-bottom-left-radius: 0.300rem;
+                  border-bottom-right-radius: 0.300rem;
+                  position: absolute;
+                  bottom: 0;
+                  width: 100%;
+                  input {
+                    width: 100%;
+                    background-color: #ffffff;
+                    appearance: none;
+                    box-shadow: none;
+                    border: none;
+                    border-radius: 0.300rem;
+                    color: #999999;
+                    font-size: 1.6rem;
+                  }
+                  .profile-image {
+                    position: absolute;
+                    left: 1.3rem;
+                    top: 1.3rem;
+                  }
+                  .actions {
+                    position: absolute;
+                    right: 1.3rem;
+                    top: 1.3rem;
+                    button {
+                      margin-top: 0;
+                      margin-left: 0.500em;
+                    }
+                  }
+                }
+              }
+              .yp-notes-container {
+                //padding: 1rem;
+                .controls {
+                  border-bottom: 1px solid #ececec;
+                  padding: 1rem;
+                  i {
+                    font-size: 2.4rem;
+                    color: #000;
+                    margin-right: 0.5rem;
+                  }
+                }
+                .note-input {
+                  width: 100%;
+                  height: 100%;
+                  min-height: 300px;
+                  background-color: #ffffff;
+                  appearance: none;
+                  box-shadow: none;
+                  border: none;
+                  border-radius: 3px;
+                  color: #000;
+                  font-size: 16px;
+                  padding: 10px;
+                  outline: 0 solid transparent;
+                  margin: 0;
+                }
+              }
+              .yp-comments-container {
+                position: relative;
+                height: 50.00rem;
+                //overflow-y: scroll;
+                //overflow-x: hidden;
+                //&::-webkit-scrollbar {
+                //  display: none;
+                //}
+                .circle {
+                  vertical-align: super;
+                  font-size: 3rem;
+                  font-weight: 900;
+                }
+                .comments-box {
+                  box-sizing: border-box;
+                  height: 43.5rem;
+                  overflow-y: auto;
+                  &::-webkit-scrollbar {
+                    display: none;
+                  }
+                  padding-bottom: 2rem;
+                  .yp-comment {
+                    position: relative;
+                    padding-left: 7.5rem;
+                    padding-right: 2rem;
+                    .profile-image {
+                      position: absolute;
+                      left: 2rem;
+                      top: 2rem
+                    }
+                    .name {
+                      font-weight: 900;
+                      margin-bottom: 0.5rem;
+                      .posted {
+                        font-size: 1.3rem;
+                        color: #a1a1a1;
+                        margin-left: 1rem;
+                        .desktop {
+                          border-bottom: 1px dotted #a1a1a1;
+                        }
+                      }
+                    }
+                    .comment-details {
+                      margin-bottom: 0;
+                      input {
+                        width: 100%;
+                        background-color: #ffffff;
+                        appearance: none;
+                        box-shadow: none;
+                        border-radius: 0.300rem;
+                        color: #000;
+                        font-size: 1.6rem;
+                        margin-top: 1rem;
+                        border: 1px solid #ececec;
+                      }
+                    }
+                    .controls {
+                      line-height: 50%;
+                      color: #999;
+                      font-size: 1.3rem;
+                      i {
+                        font-size: 1.6rem;
+                        vertical-align: sub;
+                      }
+                    }
+                  }
+                }
+                #yp-comment-input-container {
+                  margin-top: 2.500rem;
+                  background: #ffffff;
+                  padding-left: 8.0rem;
+                  padding-right: 12.500rem;
+                  padding-top: 2rem;
+                  padding-bottom: 2rem;
+                  border-top: 1px solid #ececec;
+                  border-bottom-left-radius: 0.300rem;
+                  border-bottom-right-radius: 0.300rem;
+                  position: absolute;
+                  bottom: 0;
+                  width: 100%;
+                  .more {
+                    position: absolute;
+                    left: 0.5rem;
+                  }
+                  input {
+                    width: 100%;
+                    background-color: #ffffff;
+                    appearance: none;
+                    box-shadow: none;
+                    border: none;
+                    border-radius: 0.300rem;
+                    color: #999999;
+                    font-size: 1.6rem;
+                  }
+                  .profile-image {
+                    position: absolute;
+                    left: 3.0rem;
+                    top: 1.3rem;
+                  }
+                  .actions {
+                    position: absolute;
+                    right: 1.3rem;
+                    top: 1.3rem;
+                    button {
+                      margin-top: 0;
+                      margin-left: 0.500em;
+                    }
+                  }
+                }
+              }
+              .yp-file-container {
+                position: relative;
+                height: 50.00rem;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                &::-webkit-scrollbar {
+                  display: none;
+                }
+                .header {
+                  position: relative;
+                  padding-left: 12.00rem;
+                  border-bottom: 1px solid #ececec;
+                  padding-top: 2.5rem;
+                  padding-bottom: 2.5rem;
+                  .actions {
+                    margin-top: 0.5rem;
+                    position: absolute;
+                    left: 2rem;
+                    button {
+                      background: #eee;
+                      color: #757575;
+                      &:first-child {
+                        margin-right: 1rem;
+                      }
+                      &:last-child {
+                        margin-right: 1.5rem;
+                      }
+                      margin-top: 0;
+                    }
+                  }
+                  .drag-container {
+                    padding-right: 2rem;
+                    p {
+                      margin-bottom: 0;
+                      font-size: 1.4rem;
+                      color: #999;
+                    }
+                  }
+                }
+                .labels {
+                  padding-top: 1.5rem;
+                  padding-bottom: 1.5rem;
+                  padding-left: 2.5rem;
+                  padding-right: 16.500rem;
+                  border-bottom: 1px solid #eaeaea;
+                  background: #f9f9f9;
+                  position: relative;
+                  .name {
+                    font-size: 1.3rem;
+                    font-weight: 900;
+                    i {
+                      font-size: 2rem;
+                      color: #000;
+                      margin-left: 0.500rem;
+                      vertical-align: bottom;
+                    }
+                  }
+                  .uploaded-by {
+                    box-sizing: border-box;
+                    position: absolute;
+                    top: 1.5rem;
+                    right: 16.500rem;
+                    width: 16.500rem;
+                  }
+                  .date-added {
+                    box-sizing: border-box;
+                    position: absolute;
+                    right: 0;
+                    top: 1.5rem;
+                    width: 16.500rem;
+                  }
+                }
+                .file {
+                  padding-top: 1.5rem;
+                  padding-bottom: 1.5rem;
+                  padding-left: 5.6rem;
+                  padding-right: 34.5rem;
+                  border-bottom: 1px solid #ececec;
+                  position: relative;
+                  .file-name {
+                    a {
+                      color: black;
+                      &:hover {
+                        color: black;
+                        text-decoration: none;
+                      }
+                    }
+                    .file-img {
+                      position: absolute;
+                      top: 1.5rem;
+                      left: 2.5rem;
+                      font-size: 2rem;
+                      &.word {
+                        color: #0384c6;
+                      }
+                      &.pdf {
+                        color: #c34046;
+                      }
+                      &.excel {
+                        color: #259958;
+                      }
+                      &.image {
+                        color: #8538b6;
+                      }
+                      &.ppt {
+                        color: #da4d32;
+                      }
+                    }
+                    p.file-detail {
+                      margin-bottom: 0;
+                      font-size: 1.2rem;
+                      color: #555;
+                    }
+                    span {
+                      color: #555;
+                    }
+                  }
+                  .uploader {
+                    position: absolute;
+                    top: 1.5rem;
+                    right: 16.500rem;
+                    width: 16.500rem;
+                  }
+                  .date-controls {
+                    position: absolute;
+                    top: 1.5rem;
+                    right: 0;
+                    width: 16.500rem;
+                    i {
+                      position: absolute;
+                      right: 2rem;
+                    }
+                  }
+                }
+              }
+              .yp-assign-container {
+                @extend .yp-comments-container;
+                .yp-assign-input {
+                  padding: 2rem;
+                  padding-right: 8.0rem;
+                  border-bottom: 1px solid #ececec;
+                  position: relative;
+                  input {
+                    width: 100%;
+                    background-color: #ffffff;
+                    appearance: none;
+                    box-shadow: none;
+                    border: none;
+                    border-radius: 0.300rem;
+                    color: #999999;
+                    font-size: 1.6rem;
+                  }
+                  .actions {
+                    position: absolute;
+                    right: 2rem;
+                    bottom: 1.5rem;
+                  }
+                }
+                .assigned-user {
+                  padding: 2rem;
+                  padding-left: 7.0rem;
+                  position: relative;
+                  border-bottom: 1px solid #ececec;
+                  .profile-image {
+                    position: absolute;
+                    bottom: 1.2rem;
+                    left: 1.5rem;
+                  }
+                  .name {
+                    font-weight: 900;
+                  }
+                  .task {
+                    position: absolute;
+                    right: 1.5rem;
+                    bottom: 1.7rem;
+                    i {
+                      margin-left: 5rem;
+                    }
+                  }
+                }
+              }
+              .yp-share-container {
+                .generate-link, .send-email {
+                  padding: 2rem;
+                  border-bottom: 1px solid #ececec;
+                  color: #555;
+                  .link {
+                    margin-left: 5.7rem;
+                  }
+                  button {
+                    margin-top: 0;
+                    margin-right: 2rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

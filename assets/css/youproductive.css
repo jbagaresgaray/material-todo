@@ -1,0 +1,384 @@
+html, body 
+{
+	height: 100%;
+}
+
+.header-container
+{
+	float: left;
+	clear: both;
+	display: block;
+	width: 100%;
+	height: auto;
+	margin-bottom: 80px;
+}
+
+
+.content-container
+{
+	float: left;
+	clear: both;
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.footer-container
+{
+	float: left;
+	clear: both;
+	display: block;
+	width: 100%;
+	height: auto;
+	margin-top: 100px;
+}
+
+.footer-copyright
+{
+	text-align: center;
+}
+
+.input-width-custom
+{
+	width: 350px !important;
+}
+
+.row-margin-top-custom
+{
+	margin-top: 50px;
+}
+
+.line-item
+{
+	display: none;
+}
+
+.slide-toggle {
+  overflow: hidden;
+  transition: all 1s; 
+  padding: 25px;
+  padding-bottom: 90px;
+}
+
+.ti-header
+{
+	float: left;
+	width: 100%;
+	height: auto;
+	clear: both;
+	display: block;
+	background-color: #f8f8f8;
+	padding-top: 5px;
+	padding-bottom: 8px;
+}
+
+.ti-line
+{
+	float: left;
+	width: 100%;
+	height: auto;
+	clear: both;
+	display: block;
+}
+
+.controls-left
+{
+	float: left;
+	width: 180px;
+	padding-left: 10px;
+}
+
+.tasks-summary
+{
+	float: left;
+	width: 320px;
+	margin-top: 10px;
+}
+
+.controls-right
+{
+	float: left;
+	width: 170px;
+}
+
+.task-item
+{
+	float: left;
+	margin-bottom: 12px;
+	border: solid 1px #e0e1e5;
+}
+
+.task-view-holder
+{
+
+}
+
+.tvh-date-holder
+{
+	float: right;
+	margin-top: 10px;
+}
+
+.tvh-options-holder
+{
+	float: right;
+}
+
+.cl-task-i
+{
+	float: left;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+md-checkbox.md-checked.green .md-icon {
+ background-color: rgba(103, 175, 116, 1);
+}
+
+.priority-default-size
+{
+	font-size: 18px;
+}
+
+.sop-control
+{
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    background: none;
+}
+
+.sop-control.high
+{
+	color: #c0392b;
+}
+
+.sop-control.low
+{
+	color: #f39c12;
+}
+
+.sop-control.normal
+{
+	color: #27ae60;
+}
+
+select.sop-control:active, select.sop-control:hover {
+  outline-color: transparent;
+}
+
+.custom-width
+{
+	width: 100%;
+	height: 100%;
+}
+
+.width-header-form-input
+{
+	width: 80% !important;
+}
+
+.folders-holder-lc
+{
+	float: left;
+	width: 100%;
+	clear: both;
+	display: block;
+	height: auto;
+	margin-top: 40px;
+}
+
+.tags-holder-lc
+{
+	float: left;
+	width: 100%;
+	clear: both;
+	display: block;
+	height: auto;
+	margin-top: 40px;
+}
+
+<<<<<<< HEAD
+.full-pages-section-holder
+{
+	width: auto;
+	height: auto;
+	margin: 0px;
+    padding: 0px;
+}
+
+.login-block-holder, .register-block-holder
+{
+	position: fixed; 
+	top: 0; 
+	left: 0;
+    height: 100%;
+    width: 100%;
+	background-color: #424951;
+}
+
+.login-box-container,
+.register-box-container
+{
+	float: left;
+    position: relative;
+    left: 50%;
+    top: 10%;
+}
+
+.inner-login-box,
+.inner-register-box
+{
+	float: left;
+	position: relative;
+    left: -50%;
+}
+
+.login-logo-holder,
+.register-logo-holder
+{
+	float: left;
+   	margin-left: 328px;
+   	margin-bottom: 15px;
+}
+
+.login-box-container,
+.register-box-container
+{
+	float: left;
+	margin-left: -142px;
+}
+
+.login-box
+{
+	float: left;
+	width: 600px;
+	height: 470px;
+	background: #ffffff;
+	-moz-box-shadow: 0px 2px 2px #1f1f1f;
+	-webkit-box-shadow: 0px 2px 2px #1f1f1f;
+	box-shadow: 0px 2px 2px #1f1f1f;
+	border-radius: 5px;
+}
+
+.register-box
+{
+	float: left;
+	width: 600px;
+	height: 470px;
+	background: #ffffff;
+	-moz-box-shadow: 0px 2px 2px #1f1f1f;
+	-webkit-box-shadow: 0px 2px 2px #1f1f1f;
+	box-shadow: 0px 2px 2px #1f1f1f;
+	border-radius: 5px;
+}
+
+.lb-items
+{
+	padding: 50px;
+	padding-top: 85px;
+}
+
+.login-box md-input-container:not(.md-input-invalid).md-input-focused .md-input,
+.login-box md-input-container:not(.md-input-invalid).md-input-focused label,
+.register-box md-input-container:not(.md-input-invalid).md-input-focused .md-input,
+.register-box md-input-container:not(.md-input-invalid).md-input-focused label
+{
+    border-color: #5d9e5a;
+    color: #5d9e5a;
+}
+
+.login-box md-input-container.md-default-theme .md-input,
+md-input-container .md-input,
+.register-box md-input-container.md-default-theme .md-input
+{
+	color: #33383e !important;
+}
+
+.login-box .login-btn,
+.register-box .register-btn  
+{
+  outline: none;
+  border: none;
+  width: 500px;
+  height: 60px;
+  background-color: #5d9e5a;
+  font-size: 30px;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+.login-box .login-signup
+{
+	float: left;
+	color: #424951;
+	clear: both;
+	display: block;
+	font-style: italic;
+	font-size: 22px;
+	margin-left: 160px;
+    margin-top: 19px;
+}
+
+.login-box .login-signup a
+{
+	color: #5d9e5a;
+	font-style: normal;
+	text-decoration: none;
+}
+
+.register-box .register-login
+{
+	float: left;
+	color: #424951;
+	clear: both;
+	display: block;
+	font-style: italic;
+	font-size: 22px;
+	margin-left: 95px;
+    margin-top: 19px;
+}
+
+.register-box .register-login a
+{
+	color: #5d9e5a;
+	font-style: normal;
+	text-decoration: none;
+}
+
+.tb-panel-padding {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.tasks-section {
+	margin-top: 100px;
+}
+
+.reduce-min-width {
+	min-width: 0;
+}
+
+/*
+ * OVERRIDES
+ */
+
+#loading-bar .bar {
+	background: #fff;
+	height: 4px;
+}
+
+#loading-bar-spinner .spinner-icon {
+	width: 18px;
+	height: 18px;
+	border: solid 4px transparent;
+	border-top-color: #fff;
+	border-left-color: #fff;
+	border-radius: 10px;
+}
+
+.tasks-section .nav>li>a {
+	display: none;
+}
+
+
